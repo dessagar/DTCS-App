@@ -1,0 +1,292 @@
+<!-- chat.component.html -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script src="askme.js"></script>
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6 with-scrollbar">
+        <div class="chat-wrap pe-lg-5 pe-md-2">
+          <h3><span class="me-4"><i class="bi bi-arrow-left"></i></span>Ask Me </h3>
+  
+          <div class="chat-section">
+            <!-- Existing code for displaying questions and answers -->
+  
+           <div *ngFor="let question of questions" class="row"> 
+              <!-- <div class="col-xl-7 col-lg-9 offset-lg-3 offset-xl-5"> -->
+                <div class="col-xl-12 col-lg-12 offset-lg-12 offset-xl-12">
+                <div class="chat-ques-name text-end fw-bold">{{ question.userName }}</div>
+                <div class="chat-ques-time text-end"><small>{{ formatTimestamp(question.timestamp) }}</small></div>
+                <div class="chat-ques px-lg-4 px-md-2 px-2 py-3 mb-4"><b>
+
+                  {{ question.text }} 
+                </b>
+                  <!--=======================================================main===================================================-->
+                  <!-- <div  class="chat-reply px-lg-4 px-md-2 px-2 py-3 mb-4"> 
+                    <div *ngIf="question.answer">{{ question.answer }}</div>
+                     <button *ngIf="!question.answer" (click)="replyToQuestion(question)" class="btn btn-primary">Comment</button>
+                  </div>   
+
+                  <div *ngFor="let answer of question.answers" class="chat-reply px-lg-4 px-md-2 px-2 py-3 mb-4">
+                    <div>{{ answer }}</div>
+                  </div>
+                  <button (click)="replyToQuestion(question)" class="btn btn-primary">Comment</button>
+                  <button (click)="showAllAnswers(question)" class="btn btn-primary">Show all answers</button> -->
+                   <!--======================================main====================================================================-->
+                   <div class="chat-reply px-lg-4 px-md-2 px-2 py-3 mb-4">
+                    <div *ngIf="question.answers.length > 0">{{ question.answers[0] }}</div>
+                  </div>
+                 
+                  <ng-container *ngIf="question.showAllAnswers">
+                    <div *ngFor="let answer of question.answers.slice(1)">
+                      <div class="chat-reply px-lg-4 px-md-2 px-2 py-3 mb-4">
+                        <!-- <div>{{ answer }}</div> -->
+                        
+                        <div>{{ answer }}</div>
+
+                      </div>
+                    </div>
+                  </ng-container>
+                  
+                  <div class="button-group">
+                    <button *ngIf="!question.answer" (click)="replyToQuestion(question)" class="btn btn-primary smaller-button">Comment</button>
+                    <button *ngIf="!question.answer && question.answers.length > 1" (click)="showAllAnswers(question)" class="btn btn-primary smaller-button"> {{ question.showAllAnswers ? 'Hide answers' : 'Show all answers' }}</button>
+                  </div>
+
+
+
+
+                   <!-- <div class="chat-reply px-lg-4 px-md-2 px-2 py-3 mb-4">
+                    <div *ngIf="!question.showAllAnswers">
+                      <div>{{ question.answers[0]?.text }}</div>
+                      <div>{{ question.answers[0]?.userName }}</div>
+                      <div><small>{{ formatTimestamp(question.answers[0]?.timestamp) }}</small></div>
+                    </div>
+                    <div *ngIf="question.showAllAnswers">
+                      <div *ngFor="let answer of question.answers">
+                        <div>{{ answer.text }}</div>
+                        <div>{{ answer.userName }}</div>
+                        <div><small>{{ formatTimestamp(answer.timestamp) }}</small></div>
+                      </div>
+                    </div>
+                    <button (click)="toggleShowAllAnswers(question)" class="btn btn-primary">{{ question.showAllAnswers ? 'Hide Answers' : 'Show all answers' }}</button>
+                    <button *ngIf="!question.showAllAnswers" (click)="replyToQuestion(question)" class="btn btn-primary">Comment</button>
+                  </div>    -->
+
+                  <!-- <div class="chat-reply px-lg-4 px-md-2 px-2 py-3 mb-4">
+                    <div *ngIf="question.answers.length > 0">
+                      <div *ngFor="let answer of question.answers">{{ answer.text }}</div>
+                    </div>
+                    <button *ngIf="!question.answered" (click)="replyToQuestion(question)" class="btn btn-primary">Comment</button>
+                  </div> -->
+                  
+                 
+                </div>
+              
+                <!-- <div class="chat-reply px-lg-4 px-md-2 px-2 py-3 mb-4">
+                    <div *ngIf="question.answer">{{ question.answer }}</div>
+                     <button *ngIf="!question.answer" (click)="replyToQuestion(question)" class="btn btn-primary">Reply</button> 
+                  </div>  -->
+                
+
+              </div> 
+            </div>  
+
+            <!--new code start-->
+            <!-- <div class="chat-section">
+                <div *ngFor="let question of questions" class="row">
+                  <div class="col-xl-7 col-lg-9 offset-lg-3 offset-xl-5">
+                    <div class="chat-ques-name text-end fw-bold">{{ question.userName }}</div>
+                    <div class="chat-ques-time text-end"><small>{{ question.timestamp }}</small></div>
+                    <div class="chat-ques px-lg-4 px-md-2 px-2 py-3 mb-4">
+                      {{ question.text }}
+                      <button *ngIf="!question.answer" (click)="replyToQuestion(question)" class="btn btn-primary">Reply</button>
+                    </div>
+                  </div>
+                </div>
+                <div *ngFor="let question of questions" class="row">
+                  <div *ngIf="question.answer" class="offset-xl-1 offset-lg-3 col-xl-5 col-lg-9">
+                    <div class="chat-reply px-lg-4 px-md-2 px-2 py-3 mb-4">
+                      {{ question.answer }}
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              
+            <!--new code end-->
+        </div>
+
+        
+              <!--new code**********************************-->
+              <!-- <div *ngFor="let question of questions" class="row">
+                <div class="col-xl-7 col-lg-9 offset-lg-3 offset-xl-5">
+                  <div class="chat-ques-name text-end fw-bold">{{ question.userName }}</div>
+                  <div class="chat-ques-time text-end"><small>{{ question.timestamp }}</small></div>
+                  <div class="chat-ques px-lg-4 px-md-2 px-2 py-3 mb-4">
+                    {{ question.text }}
+                    <button *ngIf="!question.answer" (click)="replyToQuestion(question)" class="btn btn-primary">Reply</button>
+                  </div>
+                </div>
+              </div> -->
+              
+              <!-- <div *ngFor="let question of questions" class="row">
+                <div class="col-xl-7 col-lg-9">
+                  <div class="chat-reply px-lg-4 px-md-2 px-2 py-3 mb-4">
+                    <div *ngIf="question.answer">{{ question.answer }}</div>
+                  </div>
+                </div>
+              </div> -->
+              
+              <!--new code end-->
+            
+  
+          <div class="input-group mb-3 query-sec px-lg-4 px-2 px-md-2 py-3">
+            <input [(ngModel)]="newQuestion" type="text" class="form-control bg-transparent border-0"
+              placeholder="Type your query here" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button (click)="askQuestion()" class="btn btn-secondary coloured-btn" type="button" id="button-addon2">
+              <i class="material-icons">&#xe163;</i>
+            </button>
+          </div>
+  
+          <div class="unanswer-sec mb-3 px-lg-4 px-2 px-md-2 py-3"  *ngIf="unansweredCount > 0">
+            <p class="mb-0 fw-bold">{{ unansweredCount }} unanswered question(s)</p>
+            <p class="mb-0">Do you know the answer to these?</p>
+            
+
+            <div class="unanswer-sec mb-3 px-lg-4 px-2 px-md-2 py-3" *ngIf="showUnansweredQuestions">
+                <div *ngFor="let unansweredQuestion of unansweredQuestions">
+                  {{ unansweredQuestion.text }}
+                  <button (click)="replyToQuestion(unansweredQuestion)" class="btn btn-primary btn-sm">Comment</button>
+                </div>
+              </div>
+              
+              <button (click)="toggleUnansweredQuestions()" class="btn btn-primary coloured-btn"  *ngIf="unansweredCount > 0">
+                Yes, Provide Answers <span><i class="bi bi-chevron-right"></i></span>
+              </button>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- FAQ Section (unchanged) -->
+      <div class="col-md-6">
+        <div class="faq-outer-wrap ps-lg-4 ps-md-0 py-3">
+            <h3 class="faq-title mb-md-4 mb-2">FAQ's</h3>
+            <div class="accordion faq-wrap" id="accordionExample">
+                <div class="accordion-item border-top-0 border-start-0 border-end-0 pb-2">
+                    <h2 class="accordion-header faq-header" id="headingOne">
+                        <button class="accordion-button collapsed ps-0" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <span class="me-3">1.</span> How does iMedOne aid doctors and hospitals ?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            has been the industry's
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item border-top-0 border-start-0 border-end-0 py-2">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed  ps-0" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <span class="me-3">2.</span> How does iMedOne aid doctors and hospitals ?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            has been the industry's
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item border-top-0 border-start-0 border-end-0 py-2">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed  ps-0" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <span class="me-3">3.</span> How does iMedOne aid doctors and hospitals ?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            has been the industry's
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-top-0 border-start-0 border-end-0 py-2">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed  ps-0" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            <span class="me-3">4.</span> How does iMedOne aid doctors and hospitals ?
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            has been the industry's
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-top-0 border-start-0 border-end-0 py-2">
+                    <h2 class="accordion-header" id="headingFive">
+                        <button class="accordion-button collapsed  ps-0" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            <span class="me-3">5.</span> How does iMedOne aid doctors and hospitals ?
+                        </button>
+                    </h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            has been the industry's
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-top-0 border-start-0 border-end-0 py-2">
+                    <h2 class="accordion-header" id="headingSix">
+                        <button class="accordion-button collapsed  ps-0" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                            <span class="me-3">6.</span> How does iMedOne aid doctors and hospitals ?
+                        </button>
+                    </h2>
+                    <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            has been the industry's
+                        </div>
+                    </div>
+                </div>
+                 <div class="accordion-item border-top-0 border-start-0 border-end-0 py-2">
+                    <h2 class="accordion-header" id="headingSeven">
+                        <button class="accordion-button collapsed  ps-0" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSix">
+                            <span class="me-3">7..</span> How does iMedOne aid doctors and hospitals ?
+                        </button>
+                    </h2>
+                    <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            has been the industry's
+                        </div>
+                    </div>
+                </div> 
+
+
+            </div>
+        </div>
+
+    </div>
+    </div>
+  </div>
+  

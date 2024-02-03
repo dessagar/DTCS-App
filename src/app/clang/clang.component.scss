@@ -1,0 +1,179 @@
+
+/* clang.component.scss */
+/* Your navbar styling goes here */
+.navbar {
+  background-color: #e20086; /* Pink color */
+  color: #fff; /* White text */
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000; /* Ensure the navbar appears above other elements */
+
+  h2{
+    margin-right: 10px;
+    font-size: 30px;
+  }
+}
+
+.container-flex {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 80px; /* Adjust as needed */
+  margin-bottom: 40px;
+}
+
+.logo{
+  width: 40px;
+  margin-left: 20px;
+}
+.clang-container{
+  width: 65%; /* Adjust the width as needed, leaving some space for margins */
+  padding: 30px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-card-container {
+  width: 30%; /* Adjust the width as needed, leaving some space for margins */
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  .dropdown-item {
+    height: 50px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    position: relative; /* Set the position to relative for proper absolute positioning */
+    
+
+    &.active {
+      /* styles for active state, e.g., displaying additional information */
+      background-color:#f9c2e2; /* Change this to your desired background color */
+      position: relative; /* Reset the position to relative for child positioning */
+      height: auto;
+
+      .dropdown-header,
+      .dropdown-content {
+        background-color: inherit; /* Inherit background color from the header when active */
+        
+      }
+      .dropdown-content{
+        padding: 8px;
+      }
+      .dropdown-header{
+        text-decoration: underline;
+        text-transform: uppercase;
+      }
+    }
+  }
+  
+  .dropdown-header {
+    background-color: rgb(212, 209, 209);
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+  .dropdown-content {
+    max-height: 0;
+    white-space: normal; 
+    overflow: hidden;
+    transition: max-height 0.1s ease-in-out;
+    position: absolute; /* Set position to absolute for overlay effect */
+    z-index: 1; /* Ensure the toggled content appears above other dropdown items */
+    width: 100%; /* Ensure full width */
+    top: 100%; /* Position below the header */
+    left: 0; /* Align with the left edge of the dropdown item */
+    
+  }
+  
+  .dropdown-item.active .dropdown-content {
+    max-height: none; /* Adjust the max height as needed */
+  }
+
+  
+
+}
+
+.reference-list {
+  list-style-type: none;
+  padding: 0;
+
+  li {
+      margin-bottom: 10px;
+  }
+
+  a {
+      color: #e20086; /* Link color as per your theme */
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease; /* Smooth transition on color change */
+
+      &:hover {
+          color: #ff4081; /* Change link color on hover */
+      }
+  }
+}
+
+.info-section {
+  margin-bottom: 20px;
+
+  h3 {
+    color: #333;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+}
+.faint-hr {
+  border: 0; /* Remove default border */
+  border-top: 3px solid #ccc; /* Add custom top border with a faint grey color */
+  margin-top: 10px; /* Adjust margin as needed */
+  margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+.video-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  h3 {
+    color: #333;
+    flex-basis: 100%;
+    padding-left: 30px;
+    padding-bottom: 10px;
+  }
+
+  .video-container {
+    width: 32%; /* Adjust the width as needed, leaving some space for margins */
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-bottom: 28%;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+
+    iframe {
+      position: absolute;
+      // top: 0; /* Adjust the top position to reduce the gap */
+      // left: 0;
+      width: 100%;
+      height: 80%; /* Adjust the height to control the video size */
+      padding: 12px 12px 0px 12px;
+    }
+    .video-title{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      // background-color: rgba(255, 255, 255, 0.8); /* Adjust background color as needed */
+      padding: 30px;
+      box-sizing: border-box;
+      padding-left: 15px;
+    }
+  }
+}
+

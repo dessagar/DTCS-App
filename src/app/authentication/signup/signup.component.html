@@ -1,0 +1,95 @@
+
+
+
+<div class="login-card-inner-wrapper d-flex position-relative">
+    <div class='container'>
+        <div class="login-card-wrapper position-relative">
+            <div class='row'>
+                <div class="col-md-5">
+                    <div class="login-logo-wrapper">
+                        <div class="login-logo-inner-wrapper">
+                        <img src="../assets/company-logo.png" alt="Company Logo"/>
+                    </div>
+                    </div>
+                </div>
+
+                
+
+                <div class="col-md-7">
+
+                    <!--sign up successful msg starts-->
+                    <!-- <div  class="alert alert-success" role="alert">
+                        Employee sign up successful
+                      </div> -->
+                      
+                    <!--message ends-->
+                    <div class="login-form-wrapper signup-form-wrapper position-relative">
+                        <h2 class="login-title">Signup</h2>
+                        
+                        <!--sign up successful msg starts-->
+                    <div *ngIf="signupSuccess" class="alert alert-success" role="alert">
+                        Employee sign up successful..!
+                      </div> 
+                      <!-- <div *ngIf="signupSuccess"> <script>("Good job!", "You clicked the button!", "success")</script></div> -->
+                        
+                        <!--radio buttons start-->
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="role" id="employeeRadio" value="employee" [(ngModel)]="user.role" required>
+                                    <label class="form-check-label" for="employeeRadio" style="color: #e20074;">Employee</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="role" id="adminRadio" value="admin" [(ngModel)]="user.role" required>
+                                    <label class="form-check-label" for="adminRadio" style="color: #e20074;">Admin</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--radio buttons ends-->
+                        <form (ngSubmit)="signup()" #formData="ngForm">
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Name" [(ngModel)]="user.name" name="name" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Email Id" [(ngModel)]="user.email" name="email" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Username" [(ngModel)]="user.username" name="username" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Password" [(ngModel)]="user.password" name="password" required>
+                                </div>
+                            </div>
+                            <!-- <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Confirm Password" [(ngModel)]="user.confirmPassword" name="confirmPassword" required>
+                                </div>
+                            </div> -->
+                        
+
+                            <div class="row mb-3">
+                                <div class="col-md-12 d-grid">
+                                    <button type="submit" class="btn btn-primary login-btn">Signup</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="text-center"> Already have an account ? <a href=#
+                                            class="signup-link"  routerLink="../login">Login here</a></p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,144 @@
+<div class="content-outer-wrapper d-flex justify-content-start">
+  <div class="container-fluid">
+    <div class="col-md-12">
+      <div
+        id="carouselExampleIndicators"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          <!-- <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button> -->
+          <!-- Add indicators for the new slides -->
+          <ng-container *ngFor="let slide of slides; let i = index">
+            <button
+              type="button"
+              [attr.data-bs-target]="'#carouselExampleIndicators'"
+              class="active"
+            aria-current="true"
+              [attr.data-bs-slide-to]="i"
+              [attr.aria-label]="'Slide ' + (i)"
+            ></button>
+          </ng-container>
+        </div>
+
+        <div class="carousel-inner">
+          <!-- 1st slide of carousel -->
+          <!-- <div class="carousel-item active">
+            <div class="content-wrapper">
+              <div class="content-inner-wrapper">
+                <app-carousel
+                  [title]="contentData.title"
+                  [subTitle]="contentData.subTitle"
+                  [performer]="contentData.performer"
+                  [imageSrc]="contentData.imageSrc"
+                  [modalId]="contentData.modalId"
+                  [modalTarget]="contentData.modalTarget"
+                  [activeTab]="activeTab"
+                  [videoData]="videoData"
+                ></app-carousel>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- 2nd slide of carousel -->
+          <!-- <div class="carousel-item">
+            <div class="content-wrapper">
+              <div class="content-inner-wrapper">
+                <app-carousel
+                  [title]="contentData1.title"
+                  [subTitle]="contentData1.subTitle"
+                  [performer]="contentData1.performer"
+                  [imageSrc]="contentData1.imageSrc"
+                  [modalId]="contentData1.modalId"
+                  [modalTarget]="contentData1.modalTarget"
+                  [activeTab]="activeTab"
+                  [videoData]="videoData"
+                ></app-carousel>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- 3rd slide of carousel -->
+          <!-- <div class="carousel-item">
+            <div class="content-wrapper">
+              <div class="content-inner-wrapper">
+                <app-carousel
+                  [title]="contentData3.title"
+                  [subTitle]="contentData3.subTitle"
+                  [performer]="contentData3.performer"
+                  [imageSrc]="contentData3.imageSrc"
+                  [modalId]="contentData3.modalId"
+                  [modalTarget]="contentData3.modalTarget"
+                  [activeTab]="activeTab"
+                  [videoData]="videoData"
+                ></app-carousel>
+              </div>
+            </div>
+          </div> -->
+          <!-- [localData]="localData" -->
+
+          <!-- newlycreated slides -->
+          <div *ngFor="let slide of slides; let i = index" class="carousel-item " [class.active]="i === 0">
+            <div class="content-wrapper">
+              <div class="content-inner-wrapper">
+                <app-carousel
+                  [title]="slide.title"
+                  [subTitle]="slide.subtitle"
+                  [performer]="slide.performer"
+                  [imageSrc]="slide.image" 
+                  [modalId]="slide.modalId"
+                  [modalTarget]="slide.modalTarget"
+                  [activeTab]="activeTab"
+                  [videoData]="slide.externalVideos"
+                  [localData]="slide.internalVideos"
+                ></app-carousel>
+              </div>
+            </div>
+          </div>          
+        </div>
+
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true">
+            <i class="bi bi-chevron-left"></i>
+          </span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true">
+            <i class="bi bi-chevron-right"></i>
+          </span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<!-- create-slide.component.html -->
+<div class="content-outer-wrapper d-flex justify-content-start">
+  <div class="container content-wrapper">
+    <div class="content-inner-wrapper">
+      <h2>Create Slide</h2>
+      <div *ngIf="slideSuccess" class="alert" [class.alert-success]="!isEditing" [class.alert-info]="isEditing" role="alert">
+        {{ isEditing ? 'Slide updated successfully!' : 'Slide added successfully!' }}
+      </div>
+      <div *ngIf="slideDeleted" class="alert alert-success" role="alert">
+        Slide deleted successfully!
+      </div>
+      <form [formGroup]="slideForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" formControlName="title" required>
+        </div>
+        <div class="mb-3">
+          <label for="subtitle" class="form-label">Subtitle</label>
+          <input type="text" class="form-control" id="subtitle" formControlName="subtitle">
+        </div>
+        <div class="mb-3">
+          <label for="performer" class="form-label">Performer</label>
+          <input type="text" class="form-control" id="performer" formControlName="performer">
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Image</label>
+          <input type="file" class="form-control" id="image" (change)="onImageChange($event)" accept="image/*">
+        </div>        
+        
+        <div class="mb-3">
+          <label for="videos" class="form-label" style="margin-right: 20px;">Videos</label>        
+          <!-- FormArray for External Videos -->
+          <div formArrayName="externalVideos">
+          <button type="button" class="btn btn-success mb-2" (click)="addExternalVideo()">Add External Video</button>
+            <div *ngFor="let video of externalVideos.controls; let i = index" class="mb-2">
+              <div [formGroupName]="i" class="input-group">
+                <input type="text" class="form-control" formControlName="videoTitle" placeholder="Video Title" required>
+                <input type="text" class="form-control" formControlName="videoDescription" placeholder="Video Description">
+                <input type="text" class="form-control" formControlName="youtubeUrl" placeholder="YouTube Video URL">
+                <button type="button" class="btn btn-danger" style="height: 9%;" (click)="removeVideo('externalVideos', i)"><i class="fas fa-trash-alt"></i></button>
+              </div>
+            </div>
+          </div>    
+        </div>
+        
+        <!-- FormArray for Internal Videos -->
+<div formArrayName="internalVideos">
+  <button type="button" class="btn btn-success mb-2" (click)="addInternalVideo()">Add Internal Video</button>
+  <div *ngFor="let video of internalVideos.controls; let i = index" class="mb-2">
+    <div [formGroupName]="i" class="input-group">
+      <input type="text" class="form-control" formControlName="videoTitle" placeholder="Video Title" required>
+      <input type="text" class="form-control" formControlName="videoDescription" placeholder="Video Description">
+      <input type="file" class="form-control" id="video" formControlName="localVideoFile" (change)="onVideoChange($event,i)" accept="video/*">
+      <button type="button" class="btn btn-danger" style="height: 9%;" (click)="removeVideo('internalVideos', i)"><i class="fas fa-trash-alt"></i></button>
+    </div>
+  </div>
+</div>
+
+        <!-- Checkbox for selecting modules -->
+        <div class="form-check form-check-inline mt-3" *ngFor="let module of modules">
+          <input
+            class="form-check-input magenta"
+            type="radio"
+            [id]="module"
+            [value]="module"
+            [formControl]="moduleControls[module]"
+            name="selectedModule"
+          />
+          <label class="form-check-label module" [for]="module">{{ module }}</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-xl">
+          {{ isEditing ? 'Update' : 'Submit' }}
+        </button>
+      </form>
+      <div class="mt-4">
+        <h3>All Slides</h3>
+        <ul class="list-group">
+          <li class="list-group-item" style="height: 50px;" *ngFor="let slide of addedSlides; let i = index">
+            <div class="d-flex align-items-center">
+              <!-- Clickable title to show details -->
+              <span style="flex-grow: 1; cursor: pointer;" (click)="showSlideDetails(slide)">
+                {{ slide.title }}
+              </span>
+              <div>
+                <!-- Button to edit the slide -->
+                  <i class="fas fa-edit btnedit" (click)="onSlideTitleClick(slide)"></i>
+                <!-- Button to delete the slide -->
+                  <i class="fas fa-trash-alt btndel" *ngIf="!isEditing" (click)="deleteSlide(slide._id, i)"></i>
+              </div>
+            </div>
+          </li>
+        </ul>
+      
+        <!-- Display "No slides to show" message when there are no slides -->
+        <p *ngIf="addedSlides.length === 0">No slides to show</p>
+      </div>
+    </div>
+  </div>
+</div>

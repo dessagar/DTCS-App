@@ -1,0 +1,103 @@
+<!-- clang.component.html -->
+<div class="navbar">
+    <!-- Your navbar content goes here -->
+    <img src="../assets/company-logo-white.png" alt="Logo" class="logo">
+    <h2>SKILL KNOWLEDGE</h2>
+  </div>
+  <div class="container-flex">
+  <div class="clang-container">
+    <!-- Section 1: Information and Reference Links -->
+    <div class="info-section">
+      <h3>C# Information</h3>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate molestiae inventore modi! Hic quo laudantium provident, cum nobis, delectus explicabo dicta nam placeat voluptates, modi unde temporibus quisquam sunt doloremque natus asperiores. Lorem ipsum, dolor sit amet consectetur adipisicing elit. In laboriosam tempore voluptatibus eveniet aperiam esse architecto quasi repudiandae magni non quisquam, quas inventore, ratione quos laborum quae nobis excepturi. Soluta illum voluptas natus accusamus ipsa fugiat, libero dolorem incidunt provident, debitis quasi aliquid, possimus accusantium nostrum voluptate facere temporibus alias maiores necessitatibus eligendi dolore officia sapiente aut eius! Voluptatum beatae error sed nulla aperiam corrupti est quas dolor exercitationem vel, quia mollitia sit deserunt in velit! Voluptatem ipsa at consectetur officia dicta ipsum, sed blanditiis obcaecati dolorem? Nisi quis impedit, ab cupiditate consectetur sint perspiciatis laudantium labore aliquam deserunt vitae!</p>
+    <br>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates inventore sapiente vitae eaque libero expedita doloremque quasi error ipsam quidem nam rerum eveniet odit est, eligendi amet delectus molestias similique temporibus fugiat? Laboriosam, eligendi. Quas asperiores a non ea dicta ipsa, praesentium ratione iusto. In corporis illum aperiam at sit porro? Provident illum quas reprehenderit explicabo voluptatibus. Perspiciatis eligendi commodi eius. Alias ipsam eveniet id, sapiente dolorum ut distinctio nesciunt blanditiis eligendi possimus eum saepe quod magni, animi commodi. Laboriosam vel ad laudantium inventore dicta accusantium quasi, reiciendis possimus, labore, deserunt libero omnis laborum. Pariatur adipisci debitis veritatis blanditiis repellat.</p>
+     
+    </div>
+  </div>
+  <div class="info-card-container">
+    <h3>Additional Resources</h3>
+    <div class="info-section">
+        <p>Explore more resources and references to enhance your knowledge.</p>
+        
+        <!-- Dropdown-like structure -->
+        <div class="dropdown">
+          <div class="dropdown-item" (click)="toggleDropdown($event)">
+            <div class="dropdown-header">Link 1</div>
+            <div class="dropdown-content">
+                <p>Description or additional information about Link 1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur commodi animi error atque voluptatem, culpa impedit aliquam facere ipsam praesentium repellat voluptatum totam, incidunt odit sed? </p>
+                <a href="https://www.tutorialspoint.com/csharp/csharp_useful_resources.htm" target="_blank">Visit Tutorials Point</a>
+            </div>
+        </div>
+        
+        <div class="dropdown-item" (click)="toggleDropdown($event)">
+          <div class="dropdown-header">Link 2</div>
+            <div class="dropdown-content">
+                <p>Description or additional information about Link 2. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam expedita quo ratione, omnis corrupti cum consequatur unde aut odio. Maiores facere cumque, excepturi cupiditate id modi accusantium dolorem. Et ducimus dignissimos ex fugiat.</p>
+                <a href="https://www.computerscience.org/resources/c-sharp/" target="_blank">Visit Comp Science Org</a>
+            </div>
+        </div>
+
+        <div class="dropdown-item" (click)="toggleDropdown($event)">
+          <div class="dropdown-header">Link 3</div>
+            <div class="dropdown-content">
+                <p>Description or additional information about Link 2. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam expedita quo ratione, omnis corrupti cum consequatur unde aut odio. Maiores facere cumque, excepturi cupiditate id modi accusantium dolorem. Et ducimus dignissimos ex fugiat.</p>
+                <a href="https://www.moesif.com/blog/api-guide/development/api-resources-for-csharp-developers/" target="_blank">Visit Moesif</a>
+            </div>
+        </div>
+
+        <div class="dropdown-item" (click)="toggleDropdown($event)">
+          <div class="dropdown-header">Link 4</div>
+            <div class="dropdown-content">
+                <p>Description or additional information about Link 2. Lorem ipsum, dolor sit amet consectetur adipisicing elit. </p>
+                <a href="https://www.w3resource.com/csharp-exercises/" target="_blank">Visit w3resource</a>
+            </div>
+        </div>
+        
+        <div class="dropdown-item" (click)="toggleDropdown($event)">
+          <div class="dropdown-header">Link 5</div>
+            <div class="dropdown-content">
+                <p>Description or additional information about Link 2. Lorem ipsum, dolor sit amet consectetur adipisicing elit. </p>
+                <a href="https://forum.freecodecamp.org/t/blind-and-in-search-of-text-based-c-resources/473830" target="_blank">Visit FreeCodeCamp</a>
+            </div>
+        </div>
+            
+            <!-- Add more dropdown items as needed -->
+        </div>
+    </div>
+</div>
+  </div>
+  <hr class="faint-hr">
+    <!-- Section 2: Scrollable Videos -->
+    <div class="video-section">
+      <h3>Video Section</h3>
+      <div class="video-container">
+        <!-- Replace the URL in the src attribute with your video URL -->
+        <iframe src="https://www.youtube.com/embed/5FArRrpcyLo" frameborder="0" allowfullscreen></iframe>
+        <div class="video-title">
+          <h4>Graphics Simple Animation</h4>
+      </div>
+      </div>
+
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/gfkTfcpWqAY" frameborder="0" allowfullscreen></iframe>
+        <div class="video-title">
+          <h4>C# tutorial for beginners </h4>
+      </div>
+      </div>
+      <!-- Add more video containers as needed -->
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/jGD0vn-QIkg" frameborder="0" allowfullscreen></iframe>
+        <div class="video-title">
+          <h4>How to program in C#? </h4>
+      </div>
+      </div>
+  
+      <!-- Add more video containers as needed -->
+  
+    </div>
+    <hr class="faint-hr">
+
+
+    
+  

@@ -39,6 +39,7 @@ import { AdminModuleComponent } from './admin-module/admin-module.component';
 import { CreateSlideComponent } from './create-slide/create-slide.component';
 import { PmsContentService } from './flow/pms/pms-content/pms-content.service';
 import { AdminSubSectionComponent } from './admin-sub-section/admin-sub-section.component';
+import { AdminSubtopicComponent } from './admin-subtopic/admin-subtopic.component';
 
 
 
@@ -75,6 +76,7 @@ import { AdminSubSectionComponent } from './admin-sub-section/admin-sub-section.
     AdminModuleComponent,
     CreateSlideComponent,
     AdminSubSectionComponent,
+    AdminSubtopicComponent,
    
   
   ],

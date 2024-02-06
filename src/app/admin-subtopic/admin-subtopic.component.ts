@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-admin-subtopic',
   templateUrl: './admin-subtopic.component.html',

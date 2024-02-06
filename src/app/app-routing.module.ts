@@ -36,7 +36,7 @@ import { AdminSubtopicComponent } from './admin-subtopic/admin-subtopic.componen
 
 
 const routes: Routes = [
-  {path:'',redirectTo:'/signup',pathMatch:'full'},
+  {path:'',redirectTo:'/login',pathMatch:'full'},
   // { path: '#', redirectTo: '/signup' } ,
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignupComponent},

@@ -206,7 +206,7 @@
               {{ file.name.split('.')[0] }} ({{ file.size | bytes }}) - {{ getFileType(file) }}
             </span>
             <div class="file-actions">
-              <button class="btn btn-primary btn-sm" (click)="previewFile(file)"  [routerLink]="['/preview']" >Preview</button>
+              <button class="btn btn-primary btn-sm" (click)="previewFile(file)"  [routerLink]="['/preview', file.name]" >Preview</button>
               <i class="fas fa-trash-alt delete-icon" (click)="deleteFile(file)"></i>
             </div>
           </div>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-admin-sub-section',
@@ -13,7 +15,7 @@ export class AdminSubSectionComponent {
   selectedEligibility: string = '';
 
   selectedFiles: File[] = [];
-  constructor(private router: Router) {}
+  constructor(private http: HttpClient,private router: Router) {}
 
 
 // Method to handle file selection
@@ -27,11 +29,20 @@ onFileSelected(event: any): void {
 getFileType(file: File): string {
   return file.type.split('/')[1].toUpperCase();
 }
- // Function to preview a file (you can implement your logic)
- previewFile(file: File): void {
-  console.log('Previewing file:', file.name);
-  this.router.navigate(['/preview'], { state: { fileData: file } });
-}
+previewFile(file: File): void {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  this.http.post('http://localhost:3000/upload-file', formData)
+    .subscribe((response: any) => {
+      // Handle the response from the backend (if needed)
+      console.log('File uploaded successfully:', response);
+
+      // Navigate to the preview page with the filename
+      this.router.navigate(['/preview', response.filename]);
+    });
+  }
+
 
 // Function to delete a file
 deleteFile(file: File): void {

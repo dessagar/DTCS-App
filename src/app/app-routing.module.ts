@@ -70,7 +70,8 @@ const routes: Routes = [
   { path: 'createslide/:_id', component: CreateSlideComponent },
   {path:'subsection',component:AdminSubSectionComponent},
   { path: 'admin_subtopic', component :AdminSubtopicComponent},
-  {path: 'preview',component :AdminPreviewComponent}
+  {path: 'preview',component :AdminPreviewComponent},
+  {path:'preview/:filename',component: AdminPreviewComponent}
 
 ];
 

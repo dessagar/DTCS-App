@@ -1,11 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FileService } from '../file.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-admin-preview',
   templateUrl: './admin-preview.component.html',
   styleUrls: ['./admin-preview.component.scss']
 })
-export class AdminPreviewComponent {
+export class AdminPreviewComponent implements OnInit {
+  filename: string = '';
+  fileContent: ArrayBuffer | null = null;
+
+  constructor(
+    private route: ActivatedRoute,
+    private fileService: FileService,
+    private sanitizer: DomSanitizer
+  ) {}
+
+  ngOnInit(): void {
+    this.filename = this.route.snapshot.paramMap.get('filename') || '';
+
+    this.fileService.getFileContent(this.filename).subscribe(
+      (content: ArrayBuffer) => {
+        this.fileContent = content;
+      },
+      (error: any) => {
+        console.error('Error fetching file content:', error);
+      }
+    );
+  }
+
+  // Convert the ArrayBuffer to a SafeUrl
+  get safeFileContent(): SafeUrl | null {
+    if (this.fileContent) {
+      const blob = new Blob([this.fileContent], { type: 'application/octet-stream' });
+      return this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
+    }
+    return null;
+  }
   labelName: string = '';
   selectedOwner: string = '';
   selectedSubtopic: string = '';

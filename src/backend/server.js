@@ -17,6 +17,7 @@ const jwt = require('jsonwebtoken'); // for generating JWT tokens
 
 const app = express();
 const port=3000;
+app.use(cors());
 
 // Multer setup
 const storage = multer.diskStorage({
@@ -28,11 +29,25 @@ const storage = multer.diskStorage({
   }
 });
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-const PORT = process.env.PORT || 3000;
-
-
 const upload = multer({ storage });
+
+// Serve uploaded files statically
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+
+// File upload route
+app.post('/upload-file', upload.single('file'), (req, res) => {
+  // Access the uploaded file details
+  const uploadedFile = req.file;
+  // Do something with the file, e.g., respond with a success message
+  res.status(200).json({ message: 'File uploaded successfully', filename: uploadedFile.originalname });
+});
+app.get('/preview/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, 'public/uploads', filename);
+  res.sendFile(filePath);
+});
+
+const PORT = process.env.PORT || 3000;
 
 
 app.use(bodyParser.json());
@@ -363,7 +378,6 @@ console.log('Stored password:', user.password);
     });
 
     return res.status(200).json({ message: 'Login successful', token, expiresIn: 3600, role: user.role });
-    console.log('login successfull');
 
   } catch (error) {
     console.error(error);

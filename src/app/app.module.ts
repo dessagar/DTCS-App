@@ -40,8 +40,8 @@ import { CreateSlideComponent } from './create-slide/create-slide.component';
 import { PmsContentService } from './flow/pms/pms-content/pms-content.service';
 import { AdminSubSectionComponent } from './admin-sub-section/admin-sub-section.component';
 import { AdminSubtopicComponent } from './admin-subtopic/admin-subtopic.component';
-
-
+import { BytesPipe } from './admin-sub-section/bytes.pipe';
+import { AdminPreviewComponent } from './admin-preview/admin-preview.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +77,8 @@ import { AdminSubtopicComponent } from './admin-subtopic/admin-subtopic.componen
     CreateSlideComponent,
     AdminSubSectionComponent,
     AdminSubtopicComponent,
-   
+   BytesPipe,
+   AdminPreviewComponent
   
   ],
   imports: [

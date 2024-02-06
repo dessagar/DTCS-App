@@ -1,22 +1,51 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FileService } from '../file.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 
 @Component({
-  selector: 'app-admin-sub-section',
-  templateUrl: './admin-sub-section.component.html',
-  styleUrls: ['./admin-sub-section.component.scss']
+  selector: 'app-admin-preview',
+  templateUrl: './admin-preview.component.html',
+  styleUrls: ['./admin-preview.component.scss']
 })
-export class AdminSubSectionComponent {
+export class AdminPreviewComponent implements OnInit {
+  filename: string = '';
+  fileContent: ArrayBuffer | null = null;
+
+  constructor(
+    private route: ActivatedRoute,
+    private fileService: FileService,
+    private sanitizer: DomSanitizer
+  ) {}
+
+  ngOnInit(): void {
+    this.filename = this.route.snapshot.paramMap.get('filename') || '';
+
+    this.fileService.getFileContent(this.filename).subscribe(
+      (content: ArrayBuffer) => {
+        this.fileContent = content;
+      },
+      (error: any) => {
+        console.error('Error fetching file content:', error);
+      }
+    );
+  }
+
+  // Convert the ArrayBuffer to a SafeUrl
+  get safeFileContent(): SafeUrl | null {
+    if (this.fileContent) {
+      const blob = new Blob([this.fileContent], { type: 'application/octet-stream' });
+      return this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
+    }
+    return null;
+  }
   labelName: string = '';
   selectedOwner: string = '';
   selectedSubtopic: string = '';
   selectedEligibility: string = '';
 
   selectedFiles: File[] = [];
-  constructor(private http: HttpClient,private router: Router) {}
-
 
 // Method to handle file selection
 onFileSelected(event: any): void {
@@ -29,20 +58,11 @@ onFileSelected(event: any): void {
 getFileType(file: File): string {
   return file.type.split('/')[1].toUpperCase();
 }
-previewFile(file: File): void {
-  const formData = new FormData();
-  formData.append('file', file);
-
-  this.http.post('http://localhost:3000/upload-file', formData)
-    .subscribe((response: any) => {
-      // Handle the response from the backend (if needed)
-      console.log('File uploaded successfully:', response);
-
-      // Navigate to the preview page with the filename
-      this.router.navigate(['/preview', response.filename]);
-    });
-  }
-
+ // Function to preview a file (you can implement your logic)
+ previewFile(file: File): void {
+  console.log('Previewing file:', file.name);
+  // Implement your preview logic here
+}
 
 // Function to delete a file
 deleteFile(file: File): void {
@@ -73,4 +93,5 @@ deleteFile(file: File): void {
     this.selectedOwner = ownerValue;
   }
   
+
 }

@@ -111,34 +111,111 @@
         </div>
 <!--========================================================================================================================================-->
 <div class="container mt-3">
-    <div class="row">
-        <div class="col-md-3">
-            <label for="labelName">Label Name:</label>
-            <input type="text" class="form-control" id="labelName" [(ngModel)]="labelName">
+    <div>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="labelName" class="col-sm-4 custom-label">Name:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="labelName" [(ngModel)]="labelName" placeholder="Enter name">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="owner" class="col-sm-4 custom-label">Owner:</label>
+                    <div class="col-sm-8">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle dropbtn" type="button" id="ownerDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select owner
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="ownerDropdown">
+                                <!-- Options for owners -->
+                                <a class="dropdown-item" *ngFor="let owner of owners" href="#" (click)="selectedOwner = owner.value">{{ owner.label }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-3">
-            <label for="owner">Owner:</label>
-            <select class="form-control" id="owner" [(ngModel)]="selectedOwner">
-                <!-- Options for owners -->
-                <option *ngFor="let owner of owners" [value]="owner.value">{{ owner.label }}</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <label for="subtopic">Subtopic:</label>
-            <select class="form-control" id="subtopic" [(ngModel)]="selectedSubtopic">
-                <!-- Options for subtopics -->
-                <option *ngFor="let subtopic of subtopics" [value]="subtopic.value">{{ subtopic.label }}</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <label for="eligibility">Eligibility:</label>
-            <select class="form-control" id="eligibility" [(ngModel)]="selectedEligibility">
-                <!-- Options for eligibility -->
-                <option *ngFor="let eligibility of eligibilities" [value]="eligibility.value">{{ eligibility.label }}</option>
-            </select>
+    
+        <!-- Next row for Subtopic and Eligibility -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="subtopic" class="col-sm-4 custom-label">Subtopic:</label>
+                    <div class="col-sm-8">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle dropbtn" type="button" id="subtopicDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select subtopic
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="subtopicDropdown">
+                                <!-- Options for subtopics -->
+                                <a class="dropdown-item" *ngFor="let subtopic of subtopics" href="#" (click)="selectedSubtopic = subtopic.value">{{ subtopic.label }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="eligibility" class="col-sm-4 custom-label">Eligibility:</label>
+                    <div class="col-sm-8">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle dropbtn" type="button" id="eligibilityDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select eligibility
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="eligibilityDropdown">
+                                <!-- Options for eligibility -->
+                                <a class="dropdown-item" *ngFor="let eligibility of eligibilities" href="#" (click)="selectedEligibility = eligibility.value">{{ eligibility.label }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+    
+<!-- New row for Add Files using file input -->
+<div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label for="addFiles" class="col-sm-4 custom-label">Add Files:</label>
+        <div class="col-sm-8">
+          <div class="input-group">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="addFiles" (change)="onFileSelected($event)" multiple>
+              <label class="custom-file-label" for="addFiles">
+                <span>Upload content</span>
+                <i class="fas fa-upload ml-2"></i>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <div *ngIf="selectedFiles.length > 0">
+        <p>Selected Files:</p>
+        <div *ngFor="let file of selectedFiles">
+          <div class="file-info">
+            <span>
+              {{ file.name.split('.')[0] }} ({{ file.size | bytes }}) - {{ getFileType(file) }}
+            </span>
+            <div class="file-actions">
+              <button class="btn btn-primary btn-sm" (click)="previewFile(file)"  [routerLink]="['/preview']" >Preview</button>
+              <i class="fas fa-trash-alt delete-icon" (click)="deleteFile(file)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
 <!--======================================================================================================================================================================-->
 
 

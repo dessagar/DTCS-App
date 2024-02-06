@@ -30,8 +30,8 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { AdminModuleComponent } from './admin-module/admin-module.component';
 import { CreateSlideComponent } from './create-slide/create-slide.component';
 import { AdminSubSectionComponent } from './admin-sub-section/admin-sub-section.component';
+import { AdminPreviewComponent } from './admin-preview/admin-preview.component';
 import { AdminSubtopicComponent } from './admin-subtopic/admin-subtopic.component';
-
 
 
 
@@ -69,8 +69,8 @@ const routes: Routes = [
   {path:'createslide',component:CreateSlideComponent},
   { path: 'createslide/:_id', component: CreateSlideComponent },
   {path:'subsection',component:AdminSubSectionComponent},
-  { path: 'admin_subtopic', component :AdminSubtopicComponent}
-
+  { path: 'admin_subtopic', component :AdminSubtopicComponent},
+  {path: 'preview',component :AdminPreviewComponent}
 
 ];
 

@@ -95,21 +95,25 @@
         <div class="dashboard-fliter py-2 px-4">
             <div class="container-fluid">
                 <div class="row mx-0 align-items-center">
-
-
                     <div class="col-md-8">
                         <div >
                             Breadcrumbs
                         </div>
-                    </div>
-                    
-        
+                    </div>       
                 </div>
             </div>
         </div>
 <!--========================================================================================================================================-->
 <div class="container">
-    <img *ngIf="safeFileContent" [src]="safeFileContent" alt="File Preview">
+    <ng-container *ngIf="isImage; else videoTemplate">
+      <img *ngIf="safeFileContent" [src]="safeFileContent" alt="File Preview">
+    </ng-container>
+  
+    <ng-template #videoTemplate>
+      <video *ngIf="safeFileContent" [src]="safeFileContent" controls width="100%" height="auto">
+        Your browser does not support the video tag.
+      </video>
+    </ng-template>
   </div>
   
 

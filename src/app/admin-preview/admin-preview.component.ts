@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FileService } from '../file.service';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';  // Import SafeUrl
 
 @Component({
   selector: 'app-admin-preview',
@@ -53,10 +52,21 @@ onFileSelected(event: any): void {
   // Append the newly selected files to the existing array
   this.selectedFiles = this.selectedFiles.concat(Array.from(files));
 }
+get isImage(): boolean {
+  return this.getFileTypeFromFilename(this.filename) === 'image';
+}
 
 // Function to get the file type based on the file extension
-getFileType(file: File): string {
-  return file.type.split('/')[1].toUpperCase();
+getFileTypeFromFilename(filename: string): string {
+  const extension = filename.split('.').pop()?.toLowerCase() || '';
+  // Check for common image and video extensions
+  if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
+    return 'image';
+  } else if (['mp4', 'webm', 'ogg'].includes(extension)) {
+    return 'video';
+  } else {
+    return '';
+  }
 }
  // Function to preview a file (you can implement your logic)
  previewFile(file: File): void {

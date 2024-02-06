@@ -34,14 +34,12 @@ previewFile(file: File): void {
   formData.append('file', file);
 
   this.http.post('http://localhost:3000/upload-file', formData)
-    .subscribe((response: any) => {
+    .subscribe((response) => {
       // Handle the response from the backend (if needed)
       console.log('File uploaded successfully:', response);
-
-      // Navigate to the preview page with the filename
-      this.router.navigate(['/preview', response.filename]);
     });
-  }
+}
+
 
 
 // Function to delete a file

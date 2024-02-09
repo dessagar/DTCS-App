@@ -8,6 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AdminSubtopicComponent {
   selectedItem: string = 'iMedOne Overview';
+  showAddSubtopicForm: boolean = false;
+    newSubtopicTitle: string = '';
+    newSubtopicDescription: string = '';
+    subtopics: any[] = []; // Initialize with any existing subtopics
 
   onSelectItem(item: string) {
     this.selectedItem = item;
@@ -22,4 +26,32 @@ export class AdminSubtopicComponent {
         cardElement.remove();
     }
 }
+// toggleAddSubtopic() {
+//   this.showAddSubtopicForm = !this.showAddSubtopicForm;
+// }
+
+
+// addSubtopic() {
+//   // Add the new subtopic to the list
+//   this.subtopics.push({
+//       title: this.newSubtopicTitle,
+//       description: this.newSubtopicDescription,
+//       subCount: 0 // Initially set to 0, you can adjust as needed
+//   });
+
+//   // Reset the form fields
+//   this.newSubtopicTitle = '';
+//   this.newSubtopicDescription = '';
+
+//   // Hide the form
+//   this.showAddSubtopicForm = false;
+// }
+
+//     deleteSubtopic(subtopic: any) {
+//         // Implement deletion logic here, you may remove the subtopic from the array
+//         const index = this.subtopics.indexOf(subtopic);
+//         if (index !== -1) {
+//             this.subtopics.splice(index, 1);
+//         }
+//     }
 }

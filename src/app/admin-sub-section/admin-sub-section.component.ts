@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
+import Quill from 'quill';
 
 @Component({
   selector: 'app-admin-sub-section',
@@ -9,15 +9,42 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./admin-sub-section.component.scss']
 })
 export class AdminSubSectionComponent {
-  labelName: string = '';
-  selectedOwner: string = '';
+  private quill!: Quill;
+
+  constructor(private http: HttpClient, private router: Router) {}
+
+  ngOnInit(): void {
+    this.initializeQuill();
+  }
+
+  private initializeQuill(): void {
+    this.quill = new Quill('#editor', {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike', 'color', 'background', 'align', 'link', 'image', 'video', 'clean'],
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          [{ 'indent': '-1' }, { 'indent': '+1' }],
+        ],
+      }
+    });
+  }
+
+  previewContent(): void {
+    const editorContent = this.quill.root.innerHTML;
+    this.router.navigate(['/preview'], { state: { content: editorContent } });
+  }
+  
+
+
+  title: string = '';
+  description: string = '';
   selectedSubtopic: string = '';
   selectedEligibility: string = '';
 
   selectedFiles: File[] = [];
-  constructor(private http: HttpClient,private router: Router) {}
-
-
+  
 // Method to handle file selection
 onFileSelected(event: any): void {
   const files: FileList = event.target.files;
@@ -35,7 +62,6 @@ previewFile(file: File): void {
 
   this.http.post('http://localhost:3000/upload-file', formData)
     .subscribe((response) => {
-      // Handle the response from the backend (if needed)
       console.log('File uploaded successfully:', response);
     });
 }
@@ -67,8 +93,8 @@ deleteFile(file: File): void {
     { label: 'Eligibility 2', value: 'eligibility2' },
     // Add more eligibilities as needed
   ];
-  selectOwner(ownerValue: string) {
-    this.selectedOwner = ownerValue;
-  }
+  // selectOwner(ownerValue: string) {
+  //   this.selectedOwner = ownerValue;
+  // }
   
 }

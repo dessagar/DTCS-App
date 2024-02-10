@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class TitleService {
   private cardTitle: string = 'i'; 
 
-  //store the card title in a service so that changes made in card title are permenant.
+  // store the card title in a service so that changes made in card title are permenant.
   getCardTitle(): string {
     return this.cardTitle;
   }
@@ -16,3 +16,5 @@ export class TitleService {
     this.cardTitle = newTitle;
   }
 }
+  
+

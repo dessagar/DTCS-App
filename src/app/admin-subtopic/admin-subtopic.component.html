@@ -127,7 +127,7 @@
                         </div>
                     </div>
                    <div class="col-md-4">
-                    <button type="button" class="btn-e20086">Add Subtopic</button>
+                    <button type="button" class="btn-e20086" routerLink="../subsection">Add </button>
                 </div>
         
 
@@ -159,7 +159,7 @@
                         </div>
                     </div>
                 </div> -->
-
+<!-- 
                 <div class="col-md-4 mb-4">
                     <div class="card h-100"  style="width: 18rem;">
                         <div class="card-body d-flex flex-column">
@@ -171,7 +171,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card 2 -->
                 <div class="col-md-4 mb-4">
                     <div class="card h-100"  style="width: 18rem;">
                         <div class="card-body d-flex flex-column">
@@ -182,7 +181,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card 3 -->
                 <div class="col-md-4 mb-4">
                     <div class="card h-100"  style="width: 18rem;">
                         <div class="card-body d-flex flex-column">
@@ -192,8 +190,7 @@
                             <button type="button" class="btn-e20086">Edit</button>
                         </div>
                     </div>
-                </div>
-                <!-- Card 4 -->
+                </div> -->
                 <div class="col-md-4 mb-4">
                     <div class="card h-100"  style="width: 18rem;">
                         <div class="card-body d-flex flex-column">
@@ -204,7 +201,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card 5 -->
                 <div class="col-md-4 mb-4">
                     <div class="card h-100"  style="width: 18rem;">
                         <div class="card-body d-flex flex-column">
@@ -215,18 +211,32 @@
                         </div>
                     </div>
                 </div>
-                <!--card 6-->
                 <div class="col-md-4 mb-4">
                     <div class="card h-100"  style="width: 18rem;">
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Subtopic Six  <i class="material-icons delete-icon" (click)="deleteCard($event)">delete</i></h5>
+                            <h5 class="card-title">Title example  <i class="material-icons delete-icon" (click)="deleteCard($event)">delete</i></h5>
                             <div class="circle d-flex justify-content-center align-items-center bg-e20086 text-white">1</div>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <p class="card-text">Description Example</p>
                             <button type="button" class="btn-e20086">Edit</button>
                         </div>
                     </div>
                 </div>
+<!-- admin-subtopic.component.html -->
 
+<div *ngFor="let data of titleDescriptionData">
+    <div class="col-md-4 mb-4">
+      <div class="card h-100" style="width: 18rem;">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ data.title }}<i class="material-icons delete-icon" (click)="deleteCard($event)">delete</i></h5>
+          <div class="circle d-flex justify-content-center align-items-center bg-e20086 text-white">1</div>
+          <p class="card-text">{{ data.description }}</p>
+          <button type="button" class="btn-e20086" routerLink="../subsection">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
 
                 <!-- <div class="row">
                     <div class="col-md-4 mb-4" *ngFor="let subtopic of subtopics">

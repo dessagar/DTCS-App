@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import Quill from 'quill';
+import { CardService } from '../card.service';
 
 @Component({
   selector: 'app-admin-sub-section',
@@ -10,8 +11,12 @@ import Quill from 'quill';
 })
 export class AdminSubSectionComponent {
   private quill!: Quill;
+  
+  title: string = '';
+  description: string = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router,
+    private cardService: CardService) {}
 
   ngOnInit(): void {
     this.initializeQuill();
@@ -34,67 +39,36 @@ export class AdminSubSectionComponent {
   previewContent(): void {
     const editorContent = this.quill.root.innerHTML;
     this.router.navigate(['/preview'], { state: { content: editorContent } });
+// Send a POST request to your server with the title, description, and content
+this.http.post('http://localhost:3000/store-content', { title: this.title, description: this.description, content: editorContent })
+.subscribe(
+  (response) => {
+    console.log('Data stored successfully:', response);
+
+    // After storing the data, trigger card addition in admin-subtopic
+    this.addCardInAdminSubtopic();
+
+    // Handle success (e.g., show a success message to the user)
+  },
+  (error) => {
+    console.error('Error storing data:', error);
+    // Handle error (e.g., show an error message to the user)
   }
-  
-
-
-  title: string = '';
-  description: string = '';
-  selectedSubtopic: string = '';
-  selectedEligibility: string = '';
-
-  selectedFiles: File[] = [];
-  
-// Method to handle file selection
-onFileSelected(event: any): void {
-  const files: FileList = event.target.files;
-  // Append the newly selected files to the existing array
-  this.selectedFiles = this.selectedFiles.concat(Array.from(files));
-}
-
-// Function to get the file type based on the file extension
-getFileType(file: File): string {
-  return file.type.split('/')[1].toUpperCase();
-}
-previewFile(file: File): void {
-  const formData = new FormData();
-  formData.append('file', file);
-
-  this.http.post('http://localhost:3000/upload-file', formData)
-    .subscribe((response) => {
-      console.log('File uploaded successfully:', response);
-    });
-}
-
-
-
-// Function to delete a file
-deleteFile(file: File): void {
-  const index = this.selectedFiles.indexOf(file);
-  if (index !== -1) {
-    this.selectedFiles.splice(index, 1);
+);
   }
-}
-  // Populate dropdown options
-  owners: { label: string, value: string }[] = [
-    { label: 'Owner 1', value: 'owner1' },
-    { label: 'Owner 2', value: 'owner2' },
-    // Add more owners as needed
-  ];
-
-  subtopics: { label: string, value: string }[] = [
-    { label: 'Subtopic 1', value: 'subtopic1' },
-    { label: 'Subtopic 2', value: 'subtopic2' },
-    // Add more subtopics as needed
-  ];
-
-  eligibilities: { label: string, value: string }[] = [
-    { label: 'Eligibility 1', value: 'eligibility1' },
-    { label: 'Eligibility 2', value: 'eligibility2' },
-    // Add more eligibilities as needed
-  ];
-  // selectOwner(ownerValue: string) {
-  //   this.selectedOwner = ownerValue;
-  // }
-  
-}
+  // Function to add a card in admin-subtopic
+  addCardInAdminSubtopic(): void {
+    // Fetch title and description data from the server
+    this.cardService.fetchTitleAndDescription()
+      .subscribe(
+        (response: any[]) => {
+          // Send a message or event to admin-subtopic.component.ts to add a card with the fetched data
+          // You can use a shared service or another method to communicate between components
+        },
+        (error) => {
+          console.error('Error fetching title and description data:', error);
+          // Handle error (e.g., show an error message to the user)
+        }
+      );
+  }
+}  

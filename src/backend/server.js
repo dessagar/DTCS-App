@@ -484,6 +484,44 @@ app.post('/upload-video', upload.single('video'), (req, res) => {
   res.json({ filename: req.file.filename });
 });
 
+const titleDescriptionSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  timestamp: { type: Date, default: Date.now },
+});
+
+const TitleDescriptionModel = mongoose.model('TitleDescription', titleDescriptionSchema);
+
+app.post('/store-content', async (req, res) => {
+  const { title, description, content } = req.body;
+
+  try {
+    // Save title and description separately
+    const newTitleDescription = await TitleDescriptionModel.create({ title, description });
+
+    // For demonstration, print the saved data to console
+    console.log('Title and Description saved:', newTitleDescription);
+
+    // You should perform the logic to store 'content' in your database here
+
+    res.status(200).json({ message: 'Data stored successfully' });
+  } catch (error) {
+    console.error('Error storing data:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
+app.get('/get-title-description', async (req, res) => {
+  try {
+    // Retrieve title and description data from the database
+    const titleDescriptionData = await TitleDescriptionModel.find({}, 'title description');
+    res.status(200).json(titleDescriptionData);
+  } catch (error) {
+    console.error('Error fetching title and description data:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 
 app.listen(port, () => {

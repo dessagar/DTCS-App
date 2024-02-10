@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { CardService } from '../card.service';
 
 @Component({
   selector: 'app-admin-subtopic',
@@ -13,6 +13,27 @@ export class AdminSubtopicComponent {
     newSubtopicDescription: string = '';
     subtopics: any[] = []; // Initialize with any existing subtopics
 
+    titleDescriptionData: any[] = [];
+
+  constructor(private cardService: CardService) {}
+
+  ngOnInit(): void {
+    // Fetch title and description data when the component initializes
+    this.fetchTitleAndDescriptionData();
+  }
+
+  fetchTitleAndDescriptionData(): void {
+    this.cardService.fetchTitleAndDescription()
+      .subscribe(
+        (response: any[]) => {
+          this.titleDescriptionData = response;
+        },
+        (error) => {
+          console.error('Error fetching title and description data:', error);
+          // Handle error (e.g., show an error message to the user)
+        }
+      );
+  }
   onSelectItem(item: string) {
     this.selectedItem = item;
   }

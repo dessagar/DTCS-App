@@ -37,15 +37,33 @@ export class AdminSubtopicComponent {
   onSelectItem(item: string) {
     this.selectedItem = item;
   }
-  deleteCard(event: MouseEvent) {
-    // Get the parent card element
-    const cardElement = (event.target as HTMLElement).closest('.card');
+
+//   deleteCard(event: MouseEvent, index: number) {
+//     const cardElement = (event.target as HTMLElement).closest('.card');
     
-    // Remove the card if found
-    if (cardElement) {
-        cardElement.remove();
-    }
-}
+//     if (cardElement) {
+//         cardElement.remove();
+//     }
+//     this.titleDescriptionData.splice(index, 1);
+// }
+
+deleteCard(event: MouseEvent, index: number) {
+  // Get the ID of the item to be deleted
+  const itemId = this.titleDescriptionData[index]._id;
+
+  // Send a DELETE request to the server to delete the item
+  this.cardService.deleteTitleDescription(itemId)
+    .subscribe(
+      () => {
+        // Remove the item from the array if deletion is successful
+        this.titleDescriptionData.splice(index, 1);
+        console.log('Item deleted successfully');
+      },
+      (error) => {
+        console.error('Error deleting item:', error);
+        // Handle error (e.g., show an error message to the user)
+      }
+    );
 }
 // toggleAddSubtopic() {
 //   this.showAddSubtopicForm = !this.showAddSubtopicForm;
@@ -73,6 +91,6 @@ export class AdminSubtopicComponent {
 //         const index = this.subtopics.indexOf(subtopic);
 //         if (index !== -1) {
 //             this.subtopics.splice(index, 1);
-//         }
-//     }
-
+//         }
+//     }
+}

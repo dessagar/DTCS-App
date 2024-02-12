@@ -523,6 +523,19 @@ app.get('/get-title-description', async (req, res) => {
   }
 });
 
+app.delete('/delete-title-description/:id', async (req, res) => {
+  const itemId = req.params.id;
+
+  try {
+    // Delete the item from the database using its ID
+    await TitleDescriptionModel.findByIdAndDelete(itemId);
+    res.status(200).json({ message: 'Item deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting item:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

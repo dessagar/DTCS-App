@@ -13,4 +13,8 @@ export class CardService {
   fetchTitleAndDescription(): Observable<any> {
     return this.http.get<any>('http://localhost:3000/get-title-description');
   }
+
+  deleteTitleDescription(itemId: string): Observable<any> {
+    return this.http.delete(`http://localhost:3000/delete-title-description/${itemId}`);
+  }
 }

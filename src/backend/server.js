@@ -536,6 +536,35 @@ app.delete('/delete-title-description/:id', async (req, res) => {
   }
 });
 
+const subjectSchema = new mongoose.Schema({
+  title: String,
+  subtopics: Number
+});
+const Subject = mongoose.model('Subject', subjectSchema);
+
+app.get('/api/subjects', async (req, res) => {
+  try {
+    const subjects = await Subject.find();
+    res.json(subjects);
+  } catch (error) {
+    console.error('Error fetching subjects:', error);
+    res.status(500).json({ error: 'Error fetching subjects' });
+  }
+});
+
+app.post('/api/subjects', async (req, res) => {
+  const { title, subtopics } = req.body;
+  try {
+    const newSubject = new Subject({ title, subtopics });
+    await newSubject.save();
+    res.json(newSubject);
+  } catch (error) {
+    console.error('Error saving subject:', error);
+    res.status(500).json({ error: 'Error saving subject' });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

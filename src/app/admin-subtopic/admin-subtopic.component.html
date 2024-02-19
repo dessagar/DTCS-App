@@ -236,8 +236,8 @@
             <h5 class="card-title">{{ data.title }}<i class="material-icons delete-icon" (click)="deleteCard($event, i)">delete</i></h5>
             <div class="circle d-flex justify-content-center align-items-center bg-e20086 text-white">1</div>
             <p class="card-text">{{ data.description }}</p>
-            <button type="button" class="btn-e20086" routerLink="../subsection">Edit</button>
-          </div>
+            <button type="button" class="btn-e20086" [routerLink]="['../subsection']" [queryParams]="{ title: data.title, description: data.description }">Edit</button>
+        </div>
         </div>
       </div>
       <!-- Close the row and start a new row after every third card -->
@@ -362,5 +362,5 @@
                 </div>
             </div>
         </div>
-    </div>
+</div>
 </div>

@@ -493,7 +493,7 @@ const titleDescriptionSchema = new mongoose.Schema({
 const TitleDescriptionModel = mongoose.model('TitleDescription', titleDescriptionSchema);
 
 app.post('/store-content', async (req, res) => {
-  const { title, description, content } = req.body;
+  const { title, description } = req.body;
 
   try {
     // Save title and description separately
@@ -511,6 +511,37 @@ app.post('/store-content', async (req, res) => {
   }
 });
 
+app.post('/update-content', async (req, res) => {
+  console.log('Received update request:', req.body);
+  const { title, description, content } = req.body;
+
+  try {
+    // Find the existing document by title and description
+    const existingDocument = await TitleDescriptionModel.findOne({ title, description });
+
+    if (!existingDocument) {
+      // If the document doesn't exist, handle accordingly (e.g., send a 404 response)
+      res.status(404).json({ message: 'Document not found' });
+      return;
+    }
+
+    // Update the title and description fields in the existing document
+    existingDocument.title = title;
+    existingDocument.description = description;
+    existingDocument.content = content; // Update content if needed
+
+    await existingDocument.save();
+
+    // For demonstration, print the updated data to console
+    console.log('Title, description, and content updated:', existingDocument);
+    console.log('Update complete.');
+
+    res.status(200).json({ message: 'Title, description, and content updated successfully' });
+  } catch (error) {
+    console.error('Error updating title, description, and content:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 app.get('/get-title-description', async (req, res) => {
   try {

@@ -28,6 +28,10 @@ export class AskmeService {
     return this.http.post<any>(`${this.apiUrl}/questions/${questionId}/answers`, { answers });
   }
 
+  postAnswers(questionId: string, answers: string[]): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/questions/${questionId}/answers`, { answers });
+  }
+
  
 
   

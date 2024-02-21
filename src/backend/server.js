@@ -100,12 +100,10 @@ const questionSchema = new mongoose.Schema({
   userName: String,
   timestamp: { type: Date, default: Date.now },
   answered: { type: Boolean, default: false },
-  // answers: [String], // Array to store multiple answers
   answers: [{
     text: String,
     timestamp: { type: Date, default: Date.now }
   }]
-  // answers: [{ text: String, userName: String, timestamp: { type: Date, default: Date.now } }],
 });
 
 const Question = mongoose.model('Question', questionSchema);

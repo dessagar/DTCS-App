@@ -606,7 +606,7 @@ app.post('/submitData', async (req, res) => {
       textareaContent,
       // Add other fields as needed
     });
-
+subject
     await newData.save();
 
     res.status(201).json({ success: true, message: 'Data saved successfully' });

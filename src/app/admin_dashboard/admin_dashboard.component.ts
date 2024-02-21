@@ -37,33 +37,43 @@ export class Admin_dashboardComponent {
 
     
 
-    leftColumn: Card[];
-    rightColumn: Card[];
+    // leftColumn: Card[];
+    // rightColumn: Card[];
 
-    constructor(private titleService: TitleService, private router: Router, private http: HttpClient) {
-        const midpoint = Math.ceil(this.cards.length / 2);
-        this.leftColumn = this.cards.slice(0, midpoint);
-        this.rightColumn = this.cards.slice(midpoint);     
+    iMedoneSubjects: any[] = [];
+    skillSubjects: any[] = [];
+  
+    constructor(private router: Router, private http: HttpClient) { }
+  
+    ngOnInit(): void {
+      this.fetchData();
     }
+  
 
-    ngOnInit() {
-        const storedLeftColumn = localStorage.getItem('leftColumn');
-        const storedRightColumn = localStorage.getItem('rightColumn');
+    // constructor(private titleService: TitleService, private router: Router, private http: HttpClient) {
+    //     const midpoint = Math.ceil(this.cards.length / 2);
+    //     this.leftColumn = this.cards.slice(0, midpoint);
+    //     this.rightColumn = this.cards.slice(midpoint);     
+    // }
+
+    // ngOnInit() {
+    //     const storedLeftColumn = localStorage.getItem('leftColumn');
+    //     const storedRightColumn = localStorage.getItem('rightColumn');
     
-        console.log('Stored Left Column:', storedLeftColumn);
-        console.log('Stored Right Column:', storedRightColumn);
+    //     console.log('Stored Left Column:', storedLeftColumn);
+    //     console.log('Stored Right Column:', storedRightColumn);
     
-        if (storedLeftColumn && storedRightColumn) {
-            this.leftColumn = JSON.parse(storedLeftColumn);
-            this.rightColumn = JSON.parse(storedRightColumn);
-        } else {
-            this.leftColumn = [];
-            this.rightColumn = [];
-        }
+    //     if (storedLeftColumn && storedRightColumn) {
+    //         this.leftColumn = JSON.parse(storedLeftColumn);
+    //         this.rightColumn = JSON.parse(storedRightColumn);
+    //     } else {
+    //         this.leftColumn = [];
+    //         this.rightColumn = [];
+    //     }
     
-        console.log('Left Column:', this.leftColumn);
-        console.log('Right Column:', this.rightColumn);
-    }
+    //     console.log('Left Column:', this.leftColumn);
+    //     console.log('Right Column:', this.rightColumn);
+    // }
     
     
 
@@ -117,46 +127,63 @@ export class Admin_dashboardComponent {
     //   });
     // }
 
-    startEditing(column: string, index: number) {
-        if (column === 'left') {
-            this.leftColumn[index].isEditing = true;
-            this.leftColumn[index].newTitle = this.leftColumn[index].title;
-        } else if (column === 'right') {
-            this.rightColumn[index].isEditing = true;
-            this.rightColumn[index].newTitle = this.rightColumn[index].title;
-        }
-    }
+    // startEditing(column: string, index: number) {
+    //     if (column === 'left') {
+    //         this.leftColumn[index].isEditing = true;
+    //         this.leftColumn[index].newTitle = this.leftColumn[index].title;
+    //     } else if (column === 'right') {
+    //         this.rightColumn[index].isEditing = true;
+    //         this.rightColumn[index].newTitle = this.rightColumn[index].title;
+    //     }
+    // }
     
-    stopEditing(column: string, index: number) {
-        if (column === 'left') {
-            this.leftColumn[index].isEditing = false;
-            this.leftColumn[index].title = this.leftColumn[index].newTitle;
-            this.updateLocalStorage();
-        } else if (column === 'right') {
-            this.rightColumn[index].isEditing = false;
-            this.rightColumn[index].title = this.rightColumn[index].newTitle;
-            this.updateLocalStorage();
-        }
-    }
+    // stopEditing(column: string, index: number) {
+    //     if (column === 'left') {
+    //         this.leftColumn[index].isEditing = false;
+    //         this.leftColumn[index].title = this.leftColumn[index].newTitle;
+    //         this.updateLocalStorage();
+    //     } else if (column === 'right') {
+    //         this.rightColumn[index].isEditing = false;
+    //         this.rightColumn[index].title = this.rightColumn[index].newTitle;
+    //         this.updateLocalStorage();
+    //     }
+    // }
     
-    deleteCard(column: string, index: number) {
-        if (column === 'left') {
-            this.leftColumn.splice(index, 1);
-            this.updateLocalStorage();
-        } else if (column === 'right') {
-            this.rightColumn.splice(index, 1);
-            this.updateLocalStorage();
-        }
-    }
+    // deleteCard(column: string, index: number) {
+    //     if (column === 'left') {
+    //         this.leftColumn.splice(index, 1);
+    //         this.updateLocalStorage();
+    //     } else if (column === 'right') {
+    //         this.rightColumn.splice(index, 1);
+    //         this.updateLocalStorage();
+    //     }
+    // }
     
-    updateLocalStorage() {
-        localStorage.setItem('leftColumn', JSON.stringify(this.leftColumn));
-        localStorage.setItem('rightColumn', JSON.stringify(this.rightColumn));
-    }
+    // updateLocalStorage() {
+    //     localStorage.setItem('leftColumn', JSON.stringify(this.leftColumn));
+    //     localStorage.setItem('rightColumn', JSON.stringify(this.rightColumn));
+    // }
   
 
     logout() {
         this.router.navigate(['/login']);
       }
+
+     
+  fetchData(): void {
+    this.http.get<any[]>('/api/data').subscribe(
+      data => {
+        this.iMedoneSubjects = data.filter(subject => subject.chosenOption === 'iMedone Knowledge');
+        this.skillSubjects = data.filter(subject => subject.chosenOption === 'Skill Knowledge');
+      },
+      error => {
+        console.error('Error fetching data:', error);
+      }
+    );
+  }
+
+  deleteSubject(id: string): void {
+    // Implement delete logic
+  }
 
 }

@@ -3,9 +3,6 @@ import { AskmeService } from './askme.service';
 
 
 
-
-
-
 @Component({
   selector: 'app-askme',
   templateUrl: './askme.component.html',
@@ -91,6 +88,28 @@ export class AskmeComponent  {
       this.updateAnswersInDatabase(question._id, question.answers);
     }
   }
+  // replyToQuestion(question: any) {
+  //   const answer = prompt('Enter your answer:');
+  //   if (answer) {
+  //     if (!question.answers) {
+  //       question.answers = [];
+  //     }
+  //     // Define an interface for the answer object
+  //     interface Answer {
+  //       text: string;
+  //     }
+  //     // Push the answer as an object conforming to the Answer interface
+  //     question.answers.push({ text: answer } as Answer);
+  //     // Extract the answer texts and pass them to the updateAnswersInDatabase method
+  //     this.updateAnswersInDatabase(question._id, question.answers.map((a: Answer) => a.text));
+  //   }
+  // }
+  
+  // private updateAnswersInDatabase(questionId: string, answers: string[]) {
+  //   this.chatService.postAnswers(questionId, answers).subscribe(() => {
+  //     this.fetchQuestions();
+  //   });
+  // }
 
 
   fetchQuestions() {

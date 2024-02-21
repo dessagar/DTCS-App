@@ -14,7 +14,7 @@ export class AdminSubSectionComponent {
   selectedSubtopic: string = '';
   selectedEligibility: string = '';
   textareaContent: string ='';
-  selectedItem: string = 'iMedOne Overview';
+  selectedItem: string = 'iMedOne Knowledge';
 
 
   selectedFiles: File[] = [];

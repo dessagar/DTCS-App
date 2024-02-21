@@ -47,6 +47,13 @@ app.get('/preview/:filename', (req, res) => {
   res.sendFile(filePath);
 });
 
+app.post('/upload-files-and-data', upload.array('files'), (req, res) => {
+
+  const files = req.files;
+
+  res.status(200).json({ message: 'Data and files uploaded successfully' ,filename: files.originalname});
+});
+
 const PORT = process.env.PORT || 3000;
 
 
@@ -565,34 +572,66 @@ app.delete('/delete-title-description/:id', async (req, res) => {
   }
 });
 
-const subjectSchema = new mongoose.Schema({
-  title: String,
-  subtopics: Number
+const dataSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  eligibility: {
+    type: String,
+    required: false, // Make it optional
+  },
+  chosenOption: {
+    type: String,
+    required: true,
+  },
+  textareaContent: {
+    type: String,
+    required: false, // Make it optional
+  },
+  // Add other fields as needed
 });
-const Subject = mongoose.model('Subject', subjectSchema);
 
-app.get('/api/subjects', async (req, res) => {
+const DataModel = mongoose.model('Data', dataSchema);
+
+
+app.post('/submitData', async (req, res) => {
   try {
-    const subjects = await Subject.find();
-    res.json(subjects);
+    const { name, eligibility, chosenOption, textareaContent } = req.body;
+
+    const newData = new DataModel({
+      name,
+      eligibility,
+      chosenOption,
+      textareaContent,
+      // Add other fields as needed
+    });
+
+    await newData.save();
+
+    res.status(201).json({ success: true, message: 'Data saved successfully' });
   } catch (error) {
-    console.error('Error fetching subjects:', error);
-    res.status(500).json({ error: 'Error fetching subjects' });
+    if (error.name === 'ValidationError') {
+      const errors = Object.values(error.errors).map((err) => err.message);
+      console.error('Validation error:', errors);
+      res.status(400).json({ success: false, errors });
+    } else {
+      console.error('Error saving data:', error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
   }
 });
-
-app.post('/api/subjects', async (req, res) => {
-  const { title, subtopics } = req.body;
+// Add this route after the existing route for saving data
+app.get('/getRecentData', async (req, res) => {
   try {
-    const newSubject = new Subject({ title, subtopics });
-    await newSubject.save();
-    res.json(newSubject);
+    const recentData = await DataModel.find().sort({ _id: -1 }).limit(1);
+
+    res.status(200).json(recentData);
   } catch (error) {
-    console.error('Error saving subject:', error);
-    res.status(500).json({ error: 'Error saving subject' });
+    console.error('Error fetching recent data:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 });
-
 
 
 app.listen(port, () => {

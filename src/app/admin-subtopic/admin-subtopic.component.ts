@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { CardService } from '../card.service';
-import { EditModeService } from '../edit-mode.service';
-
 
 @Component({
   selector: 'app-admin-subtopic',
@@ -17,8 +15,7 @@ export class AdminSubtopicComponent {
 
     titleDescriptionData: any[] = [];
 
-  constructor(private cardService: CardService,
-    private editModeService: EditModeService) {}
+  constructor(private cardService: CardService) {}
 
   ngOnInit(): void {
     // Fetch title and description data when the component initializes
@@ -68,9 +65,6 @@ deleteCard(event: MouseEvent, index: number) {
       }
     );
 }
-onEditClick(): void {
-  this.editModeService.setEditMode(true);
-}
 // toggleAddSubtopic() {
 //   this.showAddSubtopicForm = !this.showAddSubtopicForm;
 // }
@@ -97,6 +91,6 @@ onEditClick(): void {
 //         const index = this.subtopics.indexOf(subtopic);
 //         if (index !== -1) {
 //             this.subtopics.splice(index, 1);
-//         }
-//     }
+//         }
+//     }
 }

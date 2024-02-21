@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-admin-sub-section',
@@ -13,12 +13,65 @@ export class AdminSubSectionComponent {
   selectedOwner: string = '';
   selectedSubtopic: string = '';
   selectedEligibility: string = '';
+  textareaContent: string ='';
   selectedItem: string = 'iMedOne Overview';
 
 
   selectedFiles: File[] = [];
-  constructor(private http: HttpClient,private router: Router) {}
+  constructor(private http: HttpClient,private router: Router,
+    private dataService: DataService) {}
 
+    storeAndNavigateToPreview() {
+      const dataToStore = {
+        name: this.labelName,
+        eligibility: this.selectedEligibility,
+        chosenOption: this.selectedItem,
+        textareaContent: this.textareaContent,
+        files: this.selectedFiles.map(file => file.name),
+        // Add other properties as needed
+      };
+    
+      this.dataService.storeData(dataToStore).subscribe(
+        (response) => {
+          console.log('Data stored successfully:', response);
+          // After storing data, navigate to the preview page
+          this.router.navigate(['/datapreview']);
+        },
+        (error) => {
+          console.error('Error storing data:', error);
+          // Handle error as needed
+        }
+      );
+       // Create a FormData object to append files
+       const formData = new FormData();
+    
+       // Append other data to FormData
+       formData.append('name', this.labelName);
+       formData.append('eligibility', this.selectedEligibility);
+       formData.append('chosenOption', this.selectedItem);
+       formData.append('textareaContent', this.textareaContent);
+     
+       // Append each file to FormData
+       for (const file of this.selectedFiles) {
+         formData.append('files', file, file.name);
+       }
+     
+       // Upload files and other data to the server
+       this.http.post('http://localhost:3000/upload-files-and-data', formData)
+         .subscribe(
+           (response) => {
+             console.log('Data and files uploaded successfully:', response);
+             // After storing data and uploading files, navigate to the preview page
+             this.router.navigate(['/datapreview']);
+           },
+           (error) => {
+             console.error('Error uploading files and data:', error);
+             // Handle error as needed
+           }
+         );
+    }
+    
+    
 
 // Method to handle file selection
 onFileSelected(event: any): void {

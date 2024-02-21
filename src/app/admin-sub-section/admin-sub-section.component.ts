@@ -1,11 +1,6 @@
-// admin-sub-section.component.ts
-
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import Quill from 'quill';
-import { CardService } from '../card.service';
-import { EditModeService } from '../edit-mode.service';
 
 
 @Component({
@@ -13,109 +8,71 @@ import { EditModeService } from '../edit-mode.service';
   templateUrl: './admin-sub-section.component.html',
   styleUrls: ['./admin-sub-section.component.scss']
 })
-export class AdminSubSectionComponent implements OnInit {
-  private quill!: Quill;
-  title: string = '';
-  description: string = '';
-  isEditMode: boolean = false;
+export class AdminSubSectionComponent {
+  labelName: string = '';
+  selectedOwner: string = '';
+  selectedSubtopic: string = '';
+  selectedEligibility: string = '';
+  selectedItem: string = 'iMedOne Overview';
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private cardService: CardService,
-    private editModeService: EditModeService,
-    private route: ActivatedRoute,
-  ) {}
 
-  ngOnInit(): void {
-    this.initializeQuill();
-    this.route.queryParams.subscribe(params => {
-      this.title = params['title'];
-      this.description = params['description'];
+  selectedFiles: File[] = [];
+  constructor(private http: HttpClient,private router: Router) {}
+
+
+// Method to handle file selection
+onFileSelected(event: any): void {
+  const files: FileList = event.target.files;
+  // Append the newly selected files to the existing array
+  this.selectedFiles = this.selectedFiles.concat(Array.from(files));
+}
+
+// Function to get the file type based on the file extension
+getFileType(file: File): string {
+  return file.type.split('/')[1].toUpperCase();
+}
+previewFile(file: File): void {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  this.http.post('http://localhost:3000/upload-file', formData)
+    .subscribe((response) => {
+      // Handle the response from the backend (if needed)
+      console.log('File uploaded successfully:', response);
     });
+}
 
-    this.editModeService.isEditMode$.subscribe((isEditMode) => {
-      this.isEditMode = isEditMode;
-    });
-    this.route.queryParams.subscribe(params => {
-      // Check if 'title' and 'description' parameters exist
-      if (params['title'] && params['description']) {
-        // Set isEditMode to true if the parameters exist
-        this.isEditMode = true;
-      }
-    });
-  }
 
-  private initializeQuill(): void {
-    this.quill = new Quill('#editor', {
-      theme: 'snow',
-      modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike', 'color', 'background', 'align', 'link', 'image', 'video', 'clean'],
-          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-          [{ 'indent': '-1' }, { 'indent': '+1' }],
-        ],
-      }
-    });
-  }
 
-  previewContent(): void {
-    console.log('Is Edit Mode:', this.isEditMode);
-  
-    const editorContent = this.quill.root.innerHTML;
-  
-    if (this.isEditMode) {
-      this.updateContent(editorContent);
-    } else {
-      this.router.navigate(['/preview'], { state: { content: editorContent } });
-      this.storeContent(editorContent);
-    }
+// Function to delete a file
+deleteFile(file: File): void {
+  const index = this.selectedFiles.indexOf(file);
+  if (index !== -1) {
+    this.selectedFiles.splice(index, 1);
   }
-  
-  updateContent(editorContent: string): void {
-    this.http.post('http://localhost:3000/update-content', {
-      title: this.title,
-      description: this.description,
-      content: editorContent,
-    }).subscribe(
-      (response) => {
-        console.log('Data updated successfully:', response);
-        this.editModeService.setEditMode(false);
-      },
-      (error) => {
-        console.error('Error updating data:', error);
-      }
-    );
-  }
-  
-  storeContent(editorContent: string): void {
-    this.http.post('http://localhost:3000/store-content', {
-      title: this.title,
-      description: this.description,
-      content: editorContent,
-    }).subscribe(
-      (response) => {
-        console.log('Data stored successfully:', response);
-        // Additional logic if needed
-      },
-      (error) => {
-        console.error('Error storing data:', error);
-      }
-    );
-  }
+}
+  // Populate dropdown options
+  owners: { label: string, value: string }[] = [
+    { label: 'Owner 1', value: 'owner1' },
+    { label: 'Owner 2', value: 'owner2' },
+    // Add more owners as needed
+  ];
 
-  
+  subtopics: { label: string, value: string }[] = [
+    { label: 'Subtopic 1', value: 'subtopic1' },
+    { label: 'Subtopic 2', value: 'subtopic2' },
+    // Add more subtopics as needed
+  ];
 
-  addCardInAdminSubtopic(): void {
-    this.cardService.fetchTitleAndDescription()
-      .subscribe(
-        (response: any[]) => {
-          // You can add logic here to update the UI in admin-subtopic.component.html
-        },
-        (error) => {
-          console.error('Error fetching title and description data:', error);
-        }
-      );
+  eligibilities: { label: string, value: string }[] = [
+    { label: 'Eligibility 1', value: 'eligibility1' },
+    { label: 'Eligibility 2', value: 'eligibility2' },
+    // Add more eligibilities as needed
+  ];
+  selectOwner(ownerValue: string) {
+    this.selectedOwner = ownerValue;
+  }
+  onSelectItem(item: string) {
+    this.selectedItem = item;
   }
 }

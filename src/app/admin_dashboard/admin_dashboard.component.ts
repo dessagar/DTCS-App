@@ -23,16 +23,16 @@ interface Card {
 
 export class Admin_dashboardComponent {
     cards: Card[] = [
-        { title: 'iMedOne Overview', newTitle: '', subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false },
-        { title: 'Admin', newTitle: '',subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        { title: 'Rights', newTitle: '',subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        { title: 'GSUS', newTitle: '',subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        { title: 'ISUS', newTitle: '',subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false },
-        { title: 'C#', newTitle: '', subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        { title: 'JavaScript', newTitle: '', subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        { title: 'Angular', newTitle: '', subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false },
-        { title: 'Python', newTitle: '', subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        { title: 'Ruby', newTitle: '', subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false }
+        // { title: 'iMedOne Overview', newTitle: '', subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false },
+        // { title: 'Admin', newTitle: '',subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
+        // { title: 'Rights', newTitle: '',subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
+        // { title: 'GSUS', newTitle: '',subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
+        // { title: 'ISUS', newTitle: '',subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false },
+        // { title: 'C#', newTitle: '', subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
+        // { title: 'JavaScript', newTitle: '', subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
+        // { title: 'Angular', newTitle: '', subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false },
+        // { title: 'Python', newTitle: '', subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
+        // { title: 'Ruby', newTitle: '', subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false }
     ];
 
     

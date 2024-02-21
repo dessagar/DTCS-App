@@ -42,6 +42,8 @@ import { AdminSubSectionComponent } from './admin-sub-section/admin-sub-section.
 import { AdminSubtopicComponent } from './admin-subtopic/admin-subtopic.component';
 import { BytesPipe } from './admin-sub-section/bytes.pipe';
 import { AdminPreviewComponent } from './admin-preview/admin-preview.component';
+import { DataPreviewComponent } from './data-preview/data-preview.component';
+import { DataService } from './data.service';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,8 @@ import { AdminPreviewComponent } from './admin-preview/admin-preview.component';
     AdminSubSectionComponent,
     AdminSubtopicComponent,
    BytesPipe,
-   AdminPreviewComponent
+   AdminPreviewComponent,
+   DataPreviewComponent
   
   ],
   imports: [
@@ -88,7 +91,8 @@ import { AdminPreviewComponent } from './admin-preview/admin-preview.component';
     FormsModule,
     AppRoutingModule
   ],
-  providers: [PmsContentService],
+  providers: [PmsContentService,
+    DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

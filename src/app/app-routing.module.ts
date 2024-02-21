@@ -32,7 +32,7 @@ import { CreateSlideComponent } from './create-slide/create-slide.component';
 import { AdminSubSectionComponent } from './admin-sub-section/admin-sub-section.component';
 import { AdminPreviewComponent } from './admin-preview/admin-preview.component';
 import { AdminSubtopicComponent } from './admin-subtopic/admin-subtopic.component';
-
+import { DataPreviewComponent } from './data-preview/data-preview.component';
 
 
 const routes: Routes = [
@@ -71,8 +71,8 @@ const routes: Routes = [
   {path:'subsection',component:AdminSubSectionComponent},
   { path: 'admin_subtopic', component :AdminSubtopicComponent},
   {path: 'preview',component :AdminPreviewComponent},
-  {path:'preview/:filename',component: AdminPreviewComponent}
-
+  {path:'preview/:filename',component: AdminPreviewComponent},
+  {path:'datapreview',component: DataPreviewComponent},
 ];
 
 @NgModule({

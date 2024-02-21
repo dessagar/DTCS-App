@@ -91,6 +91,6 @@ deleteCard(event: MouseEvent, index: number) {
 //         const index = this.subtopics.indexOf(subtopic);
 //         if (index !== -1) {
 //             this.subtopics.splice(index, 1);
-//         }
-//     }
+//         }
+//     }
 }

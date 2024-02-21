@@ -13,6 +13,7 @@ export class FileService {
 
   getFileContent(filename: string): Observable<ArrayBuffer> {
     return this.http.get(`${this.baseUrl}/preview/${filename}`, { responseType: 'arraybuffer' });
+    
   }
 
   uploadFile(formData: FormData): Observable<any> {

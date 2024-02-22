@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { DataService } from  '../data.service';
+
 
 import { TitleService } from './title.service'; // Update the path
 
@@ -34,21 +36,26 @@ export class Admin_dashboardComponent {
         // { title: 'Python', newTitle: '', subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
         // { title: 'Ruby', newTitle: '', subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false }
     ];
+    iMedoneSubjects: any[] = [];
+   skillSubjects: any[] = [];
+
+  
 
     
 
     // leftColumn: Card[];
     // rightColumn: Card[];
 
-    iMedoneSubjects: any[] = [];
-    skillSubjects: any[] = [];
   
-    constructor(private router: Router, private http: HttpClient) { }
   
+    constructor(private router: Router, private http: HttpClient , private dataService: DataService) { }
+
     ngOnInit(): void {
-      this.fetchData();
+      this.fetchSubjects('iMedone knowledge');
+      this.fetchSubjects('skill knowledge');
     }
   
+    
 
     // constructor(private titleService: TitleService, private router: Router, private http: HttpClient) {
     //     const midpoint = Math.ceil(this.cards.length / 2);
@@ -170,20 +177,24 @@ export class Admin_dashboardComponent {
       }
 
      
-  fetchData(): void {
-    this.http.get<any[]>('/api/data').subscribe(
-      data => {
-        this.iMedoneSubjects = data.filter(subject => subject.chosenOption === 'iMedone Knowledge');
-        this.skillSubjects = data.filter(subject => subject.chosenOption === 'Skill Knowledge');
-      },
-      error => {
-        console.error('Error fetching data:', error);
+ 
+      fetchSubjects(chosenOption: string): void {
+        this.dataService.getSubjects(chosenOption).subscribe(
+          (data: any) => {
+            if (chosenOption === 'iMedone knowledge') {
+              this.iMedoneSubjects = data;
+            } else if (chosenOption === 'skill knowledge') {
+              this.skillSubjects = data;
+            }
+          },
+          (error) => {
+            console.error('Error fetching subjects:', error);
+          }
+        );
       }
-    );
-  }
-
-  deleteSubject(id: string): void {
-    // Implement delete logic
-  }
+    
+      deleteSubject(subjectId: string): void {
+        // Logic to delete subject
+      }
 
 }

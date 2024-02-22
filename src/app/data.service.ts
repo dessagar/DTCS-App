@@ -16,4 +16,7 @@ export class DataService {
     const url = `${this.baseUrl}/submitData`;
     return this.http.post(url, data);
   }
+  getSubjects(chosenOption: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/api/subjects?chosenOption=${chosenOption}`);
+  }
 }

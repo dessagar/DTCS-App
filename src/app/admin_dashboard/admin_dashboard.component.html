@@ -30,9 +30,9 @@
                             <a href="#" class="nav-link" routerLink="../askme"><i class="bi bi-question-circle  me-3"></i><span>Ask me</span></a>
                         </li>
 
-                        <li class="nav-item mb-2">
+                        <!-- <li class="nav-item mb-2">
                             <a href="#" class="nav-link" routerLink="../chatbot"><i class="bi bi-question-circle  me-3"></i><span>Chat</span></a>
-                        </li>
+                        </li> -->
 
                         <!-- <li class="nav-item mb-2">
                             <a href="#" class="nav-link" routerLink="../chatQuestion"><i class="bi bi-question-circle  me-3"></i><span>Questions</span></a>
@@ -133,14 +133,14 @@
                     <div class="row mx-0">
 
 
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="imed">
                             <div class="row">
                                 
                                 <div class="col-md-12">
-                                    <div *ngFor="let subject of iMedoneSubjects" class="card mb-3 py-2">
+                                    <div  *ngFor="let card of leftColumn; let i = index" class="card mb-3 py-2">
                                         <div class="card-body d-flex justify-content-between align-items-center">
-                                          <h5 class="card-title common-card-title mb-3">{{ subject.name }}</h5>
-                                          <div><i class="material-icons delete-icon" (click)="deleteSubject(subject._id)">delete</i></div>
+                                          <h5 class="card-title common-card-title mb-3">{{ card.title }}</h5>
+                                          <div><i class="material-icons delete-icon">delete</i></div>
                                         </div>
                                       </div>
                                 </div>
@@ -148,20 +148,23 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6" id="skillContainer">
+                        <div class="col-md-6" id="skill">
                             <div class="row">
-                            
+                                
                                 <div class="col-md-12">
-                                    <div *ngFor="let subject of skillSubjects" class="card mb-3 py-2">
+                                    <div *ngFor="let card of rightColumn; let i = index" class="card mb-3 py-2">
                                         <div class="card-body d-flex justify-content-between align-items-center">
-                                          <h5 class="card-title common-card-title mb-3">{{ subject.name }}</h5>
-                                          <div><i class="material-icons delete-icon" (click)="deleteSubject(subject._id)">delete</i></div>
+                                            <h5 class="card-title common-card-title mb-3">{{ card.title }}</h5>
+                                            <div>
+                                                <i class="material-icons delete-icon" (click)="deleteCard('right', i, card.title)">delete</i>
+                                            </div>
                                         </div>
-                                      </div>
+                                    </div>
                                 </div>
+                                
+
                             </div>
                         </div>
-
 
                     </div>
                 </div>
@@ -180,6 +183,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>
 </div>
-

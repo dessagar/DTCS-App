@@ -29,7 +29,7 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
 
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
@@ -47,12 +47,22 @@ app.get('/preview/:filename', (req, res) => {
   res.sendFile(filePath);
 });
 
-app.post('/upload-files-and-data', upload.array('files'), (req, res) => {
-
+// Route for handling file uploads
+app.post('/upload-multiple-files', upload.array('files'), (req, res) => {
   const files = req.files;
+  const fileNames = files.map(file => file.originalname);
 
-  res.status(200).json({ message: 'Data and files uploaded successfully' ,filename: files.originalname});
+  console.log('Uploaded Files:', fileNames);
+
+  res.status(200).json({ message: 'Data and files uploaded successfully', files: fileNames });
 });
+
+app.get('/datapreview/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, 'public/uploads', filename);
+  res.sendFile(filePath);
+});
+
 
 const PORT = process.env.PORT || 3000;
 
@@ -644,6 +654,16 @@ app.get('/api/subjects', (req, res) => {
       console.error('Error fetching subjects:', error);
       res.status(500).json({ error: 'Internal server error' });
     });
+});
+// Inside your server.js or wherever your server-side code is
+app.post('/deleteCard', (req, res) => {
+    const { column, index } = req.body;
+
+    // Assuming you have a mechanism to delete the card data from the database
+    // Implement the logic to delete the card based on the column and index
+
+    // Respond with success or an error
+    res.status(200).json({ message: 'Card deleted successfully' });
 });
 
 

@@ -616,7 +616,7 @@ app.post('/submitData', async (req, res) => {
       textareaContent,
       // Add other fields as needed
     });
-
+// subject
     await newData.save();
 
     res.status(201).json({ success: true, message: 'Data saved successfully' });
@@ -642,6 +642,19 @@ app.get('/getRecentData', async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 });
+
+app.get('/api/subjects', (req, res) => {
+  const { chosenOption } = req.query;
+  Subject.find({ chosenOption })
+    .then(subjects => {
+      res.json(subjects);
+    })
+    .catch(error => {
+      console.error('Error fetching subjects:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    });
+});
+
 
 
 app.listen(port, () => {

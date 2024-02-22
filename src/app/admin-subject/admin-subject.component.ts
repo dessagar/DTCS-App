@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AdminSubjectComponent {
   title = 'angular-project';
-  selectedItem: string='iMedOne Overview';
+  selectedItem: string='iMedOne Knowledge';
   subjects: any[] = [];
   newSubject: any = { title: '', subtopics: 0 };
 

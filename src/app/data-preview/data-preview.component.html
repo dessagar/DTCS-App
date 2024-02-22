@@ -105,25 +105,27 @@
           </div>
       </div>
 <!--========================================================================================================================================-->
-  <div *ngIf="recentData">
-    <h2>Recent Data</h2>
-    <p>Name: {{ recentData.name }}</p>
-    <p>Eligibility: {{ recentData.eligibility }}</p>
-    <p>Chosen Option: {{ recentData.chosenOption }}</p>
-    <p>Textarea Content: {{ recentData.textareaContent }}</p>
-    <p>Selected Files:</p>
-    <ul>
-      <li *ngFor="let file of recentData.files">
-        {{ file }}
-        <!-- Display an image preview if it's an image -->
-        <img *ngIf="isImage(file)" [src]="getImagePreviewUrl(file)" alt="Image Preview" width="100" height="100">
-  
-        <!-- Display a video preview if it's a video -->
-        <video *ngIf="isVideo(file)" [src]="getVideoPreviewUrl(file)" width="100" height="100" controls></video>
-      </li>
-    </ul>
-    <!-- Add other fields as needed -->
-  </div>
+<!-- data-preview.component.html -->
+
+<div *ngIf="recentData">
+  <h2>Recent Data</h2>
+  <p>Name: {{ recentData.name }}</p>
+  <p>Eligibility: {{ recentData.eligibility }}</p>
+  <p>Chosen Option: {{ recentData.chosenOption }}</p>
+  <p>Textarea Content: {{ recentData.textareaContent }}</p>
+  <p>Selected Files:</p>
+  <ul>
+    <li *ngFor="let file of recentData.files">
+      {{ file }}
+      <!-- Display an image preview if it's an image -->
+      <img *ngIf="isImage(file)" [src]="getImagePreviewUrl(file)" alt="Image Preview" width="100" height="100">
+
+      <!-- Display a video preview if it's a video -->
+      <video *ngIf="isVideo(file)" [src]="getVideoPreviewUrl(file)" width="100" height="100" controls></video>
+    </li>
+  </ul>
+  <!-- Add other fields as needed -->
+</div>
 
 
 <!--======================================================================================================================================================================-->

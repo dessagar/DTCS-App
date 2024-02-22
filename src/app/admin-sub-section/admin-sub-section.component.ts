@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { forkJoin } from 'rxjs';
+
 
 @Component({
   selector: 'app-admin-sub-section',
@@ -22,54 +25,58 @@ export class AdminSubSectionComponent {
     private dataService: DataService) {}
 
     storeAndNavigateToPreview() {
-      const dataToStore = {
-        name: this.labelName,
-        eligibility: this.selectedEligibility,
-        chosenOption: this.selectedItem,
-        textareaContent: this.textareaContent,
-        files: this.selectedFiles.map(file => file.name),
-        // Add other properties as needed
-      };
+      // Upload files first
+      this.uploadFiles().subscribe(
+        (uploadResponse) => {
+          // Upload successful, now store other data
+          const dataToStore = {
+            name: this.labelName,
+            eligibility: this.selectedEligibility,
+            chosenOption: this.selectedItem,
+            textareaContent: this.textareaContent,
+            files: uploadResponse.files,
+            // Add other properties as needed
+          };
     
-      this.dataService.storeData(dataToStore).subscribe(
-        (response) => {
-          console.log('Data stored successfully:', response);
-          // After storing data, navigate to the preview page
-          this.router.navigate(['/datapreview']);
+          // Combine the upload and store observables using forkJoin
+          forkJoin([
+            this.dataService.storeData(dataToStore),
+            // Add other observables if needed
+          ]).subscribe(
+            ([storeResponse]) => {
+              console.log('Data stored successfully:', storeResponse);
+              // After storing data and uploading files, navigate to the preview page
+              this.router.navigate(['/datapreview']);
+            },
+            (error) => {
+              console.error('Error storing data:', error);
+              // Handle store error as needed
+            }
+          );
         },
-        (error) => {
-          console.error('Error storing data:', error);
-          // Handle error as needed
+        (uploadError) => {
+          console.error('Error uploading files:', uploadError);
+          // Handle upload error as needed
         }
       );
-       // Create a FormData object to append files
-       const formData = new FormData();
-    
-       // Append other data to FormData
-       formData.append('name', this.labelName);
-       formData.append('eligibility', this.selectedEligibility);
-       formData.append('chosenOption', this.selectedItem);
-       formData.append('textareaContent', this.textareaContent);
-     
-       // Append each file to FormData
-       for (const file of this.selectedFiles) {
-         formData.append('files', file, file.name);
-       }
-     
-       // Upload files and other data to the server
-       this.http.post('http://localhost:3000/upload-files-and-data', formData)
-         .subscribe(
-           (response) => {
-             console.log('Data and files uploaded successfully:', response);
-             // After storing data and uploading files, navigate to the preview page
-             this.router.navigate(['/datapreview']);
-           },
-           (error) => {
-             console.error('Error uploading files and data:', error);
-             // Handle error as needed
-           }
-         );
     }
+    
+    uploadFiles(): Observable<any> {
+      const formData = new FormData();
+      this.selectedFiles.forEach(file => {
+        formData.append('files', file);
+      });
+    
+      // Log the filenames before uploading
+      this.selectedFiles.forEach(file => {
+        console.log('Uploading file:', file.name);
+      });
+    
+      // Return the HTTP POST request
+      return this.http.post('http://localhost:3000/upload-multiple-files', formData);
+    }
+    
+    
     
     
 

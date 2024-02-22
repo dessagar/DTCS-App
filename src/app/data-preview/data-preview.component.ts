@@ -1,3 +1,5 @@
+// data-preview.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 
@@ -18,8 +20,17 @@ export class DataPreviewComponent implements OnInit {
   loadData(): void {
     this.dataService.getRecentData().subscribe(
       (data: any[]) => {
+        console.log('Server Response:', data);
+  
         if (data.length > 0) {
-          this.recentData = data[0]; // Use the first item if the array is not empty
+          this.recentData = data[0];
+          console.log('Recent Data:', this.recentData);
+  
+          if (Array.isArray(this.recentData.files)) {
+            console.log('Files:', this.recentData.files);
+          } else {
+            console.log('Files property is missing or not an array.');
+          }
         } else {
           console.log('No recent data found.');
         }
@@ -29,7 +40,7 @@ export class DataPreviewComponent implements OnInit {
       }
     );
   }
-
+  
   isImage(fileName: string): boolean {
     return /\.(jpg|jpeg|png|gif)$/i.test(fileName);
   }
@@ -37,14 +48,13 @@ export class DataPreviewComponent implements OnInit {
   isVideo(fileName: string): boolean {
     return /\.(mp4|webm|ogg)$/i.test(fileName);
   }
-
   getImagePreviewUrl(fileName: string): string {
-    // Adjust the path based on your server configuration
     return `http://localhost:3000/uploads/${fileName}`;
   }
-
+  
   getVideoPreviewUrl(fileName: string): string {
-    // Adjust the path based on your server configuration
     return `http://localhost:3000/uploads/${fileName}`;
   }
+  
+  
 }

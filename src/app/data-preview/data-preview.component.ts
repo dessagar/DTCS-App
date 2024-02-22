@@ -2,6 +2,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { Subject } from 'rxjs';
+
 
 @Component({
   selector: 'app-data-preview',
@@ -9,9 +11,13 @@ import { DataService } from '../data.service';
   styleUrls: ['./data-preview.component.scss'],
 })
 export class DataPreviewComponent implements OnInit {
-  recentData: any;
+  newDataSubject = new Subject<any>();
 
-  constructor(private dataService: DataService) {}
+  recentData: any;
+  leftColumn: any[] = []; // Declare leftColumn property
+  rightColumn: any[] = []; // Declare rightColumn property
+
+  constructor(private dataService: DataService,) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -56,5 +62,19 @@ export class DataPreviewComponent implements OnInit {
     return `http://localhost:3000/uploads/${fileName}`;
   }
   
+  onSaveClick(): void {
+    const newData = { name: this.recentData.name, chosenOption: this.recentData.chosenOption };
   
+    // Add the new tile to the appropriate column based on chosenOption
+    const targetColumn = newData.chosenOption === 'iMedOne Knowledge' ? this.leftColumn : this.rightColumn;
+    targetColumn.push({ title: newData.name});
+  
+    // Clear the form or take any other action as needed
+  
+    // You might want to update the UI by re-assigning the columns to trigger change detection
+    this.leftColumn = [...this.leftColumn];
+    this.rightColumn = [...this.rightColumn];
+  }
+  
+
 }

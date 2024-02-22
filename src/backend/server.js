@@ -654,6 +654,16 @@ app.get('/api/subjects', (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     });
 });
+// Inside your server.js or wherever your server-side code is
+app.post('/deleteCard', (req, res) => {
+    const { column, index } = req.body;
+
+    // Assuming you have a mechanism to delete the card data from the database
+    // Implement the logic to delete the card based on the column and index
+
+    // Respond with success or an error
+    res.status(200).json({ message: 'Card deleted successfully' });
+});
 
 
 

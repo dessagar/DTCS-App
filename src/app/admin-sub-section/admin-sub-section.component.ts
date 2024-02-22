@@ -24,6 +24,42 @@ export class AdminSubSectionComponent {
   constructor(private http: HttpClient,private router: Router,
     private dataService: DataService) {}
 
+    // storeAndNavigateToPreview() {
+    //   // Upload files first
+    //   this.uploadFiles().subscribe(
+    //     (uploadResponse) => {
+    //       // Upload successful, now store other data
+    //       const dataToStore = {
+    //         name: this.labelName,
+    //         eligibility: this.selectedEligibility,
+    //         chosenOption: this.selectedItem,
+    //         textareaContent: this.textareaContent,
+    //         files: uploadResponse.files,
+    //         // Add other properties as needed
+    //       };
+    
+    //       // Combine the upload and store observables using forkJoin
+    //       forkJoin([
+    //         this.dataService.storeData(dataToStore),
+    //         // Add other observables if needed
+    //       ]).subscribe(
+    //         ([storeResponse]) => {
+    //           console.log('Data stored successfully:', storeResponse);
+    //           // After storing data and uploading files, navigate to the preview page
+    //           this.router.navigate(['/datapreview']);
+    //         },
+    //         (error) => {
+    //           console.error('Error storing data:', error);
+    //           // Handle store error as needed
+    //         }
+    //       );
+    //     },
+    //     (uploadError) => {
+    //       console.error('Error uploading files:', uploadError);
+    //       // Handle upload error as needed
+    //     }
+    //   );
+    // }
     storeAndNavigateToPreview() {
       // Upload files first
       this.uploadFiles().subscribe(
@@ -32,24 +68,32 @@ export class AdminSubSectionComponent {
           const dataToStore = {
             name: this.labelName,
             eligibility: this.selectedEligibility,
-            chosenOption: this.selectedItem,
             textareaContent: this.textareaContent,
             files: uploadResponse.files,
+            chosenOption: this.selectedItem,
             // Add other properties as needed
           };
     
-          // Combine the upload and store observables using forkJoin
-          forkJoin([
-            this.dataService.storeData(dataToStore),
-            // Add other observables if needed
-          ]).subscribe(
-            ([storeResponse]) => {
+          // Log the value of this.selectedItem to check if it has the correct value
+          console.log('Chosen Option:', this.selectedItem);
+    
+          // Set new data in the service
+          this.dataService.setNewData(dataToStore);
+    
+          this.dataService.storeData(dataToStore).subscribe(
+            (storeResponse) => {
               console.log('Data stored successfully:', storeResponse);
-              // After storing data and uploading files, navigate to the preview page
+    
+              // After storing data, update the UI columns based on the chosen option
+              const targetColumnId = this.selectedItem === 'iMedOne Knowledge' ? 'imed' : 'skill';
+              const targetColumn = targetColumnId === 'imed' ? this.dataService.leftColumn : this.dataService.rightColumn;
+              targetColumn.push({ title: dataToStore.name,  });
+    
+              // Navigate to the preview page
               this.router.navigate(['/datapreview']);
             },
-            (error) => {
-              console.error('Error storing data:', error);
+            (storeError) => {
+              console.error('Error storing data:', storeError);
               // Handle store error as needed
             }
           );
@@ -61,6 +105,8 @@ export class AdminSubSectionComponent {
       );
     }
     
+    
+
     uploadFiles(): Observable<any> {
       const formData = new FormData();
       this.selectedFiles.forEach(file => {

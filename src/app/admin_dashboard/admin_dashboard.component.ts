@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { DataService } from  '../data.service';
 
 
-import { TitleService } from './title.service'; // Update the path
 
 interface Card {
     title: string;
@@ -24,38 +23,53 @@ interface Card {
 
 
 export class Admin_dashboardComponent {
-    cards: Card[] = [
-        // { title: 'iMedOne Overview', newTitle: '', subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false },
-        // { title: 'Admin', newTitle: '',subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        // { title: 'Rights', newTitle: '',subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        // { title: 'GSUS', newTitle: '',subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        // { title: 'ISUS', newTitle: '',subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false },
-        // { title: 'C#', newTitle: '', subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        // { title: 'JavaScript', newTitle: '', subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        // { title: 'Angular', newTitle: '', subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false },
-        // { title: 'Python', newTitle: '', subtopics :'Sub Topics(0)', selected: false, isEditing: false, isDisabled: false },
-        // { title: 'Ruby', newTitle: '', subtopics :'Sub Topics(10)', selected: false, isEditing: false, isDisabled: false }
-    ];
+  leftColumn: any[] = [];
+  rightColumn: any[] = [];
     iMedoneSubjects: any[] = [];
    skillSubjects: any[] = [];
-
-  
-
-    
-
-    // leftColumn: Card[];
-    // rightColumn: Card[];
-
   
   
     constructor(private router: Router, private http: HttpClient , private dataService: DataService) { }
 
+
     ngOnInit(): void {
-      this.fetchSubjects('iMedone knowledge');
-      this.fetchSubjects('skill knowledge');
-    }
-  
+      this.dataService.newDataSubject.subscribe((newData) => {
+        if (newData) {
+          console.log('Chosen Option:', newData.chosenOption);
+          console.log('Left Column:', this.leftColumn);
+          console.log('Right Column:', this.rightColumn);
     
+          const targetColumn = newData.chosenOption === 'iMedOne Knowledge' ? this.leftColumn : this.rightColumn;
+          targetColumn.push({ title: newData.name, subtopics: newData.subtopics });
+    
+          console.log('Updated Left Column:', this.leftColumn);
+          console.log('Updated Right Column:', this.rightColumn);
+        }
+      });
+    }
+    
+    
+    // Inside your component class
+deleteCard(column: string, index: number, title: string): void {
+  // Assuming you have a method in your data service to delete a card
+  this.dataService.deleteCard(column, index).subscribe(
+      (deleteResponse) => {
+          console.log('Card deleted successfully:', deleteResponse);
+
+          // Remove the card from the local array
+          if (column === 'right') {
+              this.rightColumn.splice(index, 1);
+          } else {
+              // Handle the case for the left column if needed
+          }
+      },
+      (deleteError) => {
+          console.error('Error deleting card:', deleteError);
+          // Handle delete error as needed
+      }
+  );
+}
+
 
     // constructor(private titleService: TitleService, private router: Router, private http: HttpClient) {
     //     const midpoint = Math.ceil(this.cards.length / 2);
@@ -84,13 +98,6 @@ export class Admin_dashboardComponent {
     
     
 
-    getCardTitle(index: number): string {
-        return this.cards[index].title;
-    }
-
-    setCardTitle(index: number, newTitle: string) {
-        this.cards[index].title = newTitle;
-    }
 
     
     // startEditing(column: string, index: number) {
@@ -177,24 +184,6 @@ export class Admin_dashboardComponent {
       }
 
      
- 
-      fetchSubjects(chosenOption: string): void {
-        this.dataService.getSubjects(chosenOption).subscribe(
-          (data: any) => {
-            if (chosenOption === 'iMedone knowledge') {
-              this.iMedoneSubjects = data;
-            } else if (chosenOption === 'skill knowledge') {
-              this.skillSubjects = data;
-            }
-          },
-          (error) => {
-            console.error('Error fetching subjects:', error);
-          }
-        );
-      }
     
-      deleteSubject(subjectId: string): void {
-        // Logic to delete subject
-      }
 
 }

@@ -99,6 +99,7 @@ app.use(express.static('public'));
 
 // MongoDB connection
 mongoose.connect('mongodb+srv://trainingapp111:VCot0hMvKkDwjDnv@cluster0.z8saabe.mongodb.net/?retryWrites=true&w=majority');
+// mongoose.connect(process.env.MONGODB_URI);
 // mongoose.connect(process.env.mongodb_connect_str);
 
 // Define question schema
